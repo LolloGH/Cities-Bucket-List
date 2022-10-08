@@ -1,6 +1,9 @@
 <template>
   <q-page class="flex flex-center background">
-    <div></div>
+    <div>
+      <h1>Fly borderless with your mind.</h1>
+      <h5>Note your dreams down and make them happen.</h5>
+    </div>
     <!-- <img
       alt="to do list image"
       src="../assets/earth.png"
@@ -9,19 +12,27 @@
   </q-page>
 </template>
 
-<script>
-import { defineComponent } from "vue";
-
-export default defineComponent({
-  name: "IndexPage",
-});
+<script setup>
+const name = "IndexPage";
 </script>
 
 <style scoped>
 .background {
-  background-image: url(../assets/canoaBckg.jpg);
+  background-image: url(../assets/pexels-wendy-wei-2.jpg);
   background-repeat: no-repeat;
   background-size: cover;
-  height: 80%;
+}
+
+.flex {
+  margin: 0px;
+}
+
+h1 {
+  font-size: 4rem;
+  color: #868b8e;
+}
+
+h5 {
+  color: #b9b7bd;
 }
 </style>

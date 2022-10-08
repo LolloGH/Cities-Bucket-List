@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
+  <q-layout view="hhh Lpr lFf">
     <q-header elevated class="bg-grey">
       <q-toolbar>
         <q-btn
@@ -11,8 +11,14 @@
           @click="toggleLeftDrawer"
         />
         <q-space></q-space>
-        <q-btn flat round dense icon="search" class="q-mr-xs" />
-        <q-btn flat round dense icon="group_add" />
+        <!-- <q-btn flat round dense icon="search" class="q-mr-xs" /> -->
+        <q-btn
+          flat
+          round
+          dense
+          icon="group_add"
+          @click="router.push({ path: '/auth' })"
+        />
       </q-toolbar>
       <q-toolbar inset>
         <q-toolbar-title>
@@ -41,7 +47,7 @@
       </q-toolbar>
     </q-header> -->
 
-    <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
+    <q-drawer show-if-above v-model="leftDrawerOpen" bordered>
       <q-list>
         <q-item-label header> Essential Links </q-item-label>
 
@@ -66,11 +72,14 @@
 }
 </style>
 
-<script>
-import { defineComponent, ref } from "vue";
+<script setup>
+import { defineComponent, ref, onMounted } from "vue";
 import EssentialLink from "components/EssentialLink.vue";
 import SignUp from "src/components/SignUp.vue";
+import { useRouter } from "vue-router";
 
+const leftDrawerOpen = ref(false);
+const router = useRouter();
 const linksList = [
   {
     title: "Docs",
@@ -116,23 +125,13 @@ const linksList = [
   },
 ];
 
-export default defineComponent({
-  name: "MainLayout",
+const essentialLinks = linksList;
 
-  components: {
-    EssentialLink,
-  },
+function toggleLeftDrawer() {
+  leftDrawerOpen.value = !leftDrawerOpen.value;
+}
 
-  setup() {
-    const leftDrawerOpen = ref(false);
-
-    return {
-      essentialLinks: linksList,
-      leftDrawerOpen,
-      toggleLeftDrawer() {
-        leftDrawerOpen.value = !leftDrawerOpen.value;
-      },
-    };
-  },
+onMounted(() => {
+  toggleLeftDrawer();
 });
 </script>

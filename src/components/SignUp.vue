@@ -80,7 +80,7 @@ const name = ref(null);
 const email = ref(null);
 const password = ref(null);
 const confirmPassword = ref(null);
-const isPwd = ref(null);
+const isPwd = ref(true);
 //const age = ref(null);
 const accept = ref(false);
 
@@ -107,6 +107,7 @@ function onReset() {
   email.value = null;
   password.value = null;
   confirmPassword.value = null;
+  isPwd.value = true;
   accept.value = false;
 }
 </script>

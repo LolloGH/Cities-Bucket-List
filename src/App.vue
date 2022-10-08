@@ -22,7 +22,7 @@ onMounted(async () => {
     if (!user.value) {
       console.log("not logged in");
       // redirect them to logout if the user is not there
-      router.push({ path: "/auth" });
+      //router.push({ path: "/auth" });
     } else {
       // continue to dashboard
       console.log("user LOGGED IN");
