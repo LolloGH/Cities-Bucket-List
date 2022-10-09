@@ -25,7 +25,7 @@ onMounted(async () => {
       //router.push({ path: "/auth" });
     } else {
       // continue to dashboard
-      console.log("user LOGGED IN");
+      console.log(`user ${user.value} LOGGED IN`);
       router.push({ path: "/" });
     }
   } catch (e) {

@@ -2,6 +2,7 @@
   <q-layout view="hhh Lpr lFf">
     <q-header elevated class="bg-grey">
       <q-toolbar>
+
         <q-btn
           flat
           round
@@ -11,6 +12,7 @@
           @click="toggleLeftDrawer"
         />
         <q-space></q-space>
+        <AuthButton/>
         <!-- <q-btn flat round dense icon="search" class="q-mr-xs" /> -->
         <q-btn
           flat
@@ -27,25 +29,6 @@
         </q-toolbar-title>
       </q-toolbar>
     </q-header>
-
-    <!-- <q-header elevated>
-      <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="toggleLeftDrawer"
-        />
-
-        <q-toolbar-title>
-          My Cities Bucket List
-        </q-toolbar-title>
-
-        <div>Space for logged user</div>
-      </q-toolbar>
-    </q-header> -->
 
     <q-drawer show-if-above v-model="leftDrawerOpen" bordered>
       <q-list>
@@ -75,7 +58,7 @@
 <script setup>
 import { defineComponent, ref, onMounted } from "vue";
 import EssentialLink from "components/EssentialLink.vue";
-import SignUp from "src/components/SignUp.vue";
+import AuthButton from "src/components/AuthButton.vue";
 import { useRouter } from "vue-router";
 
 const leftDrawerOpen = ref(false);
@@ -99,33 +82,11 @@ const linksList = [
     icon: "chat",
     link: "https://chat.quasar.dev",
   },
-  {
-    title: "Forum",
-    caption: "forum.quasar.dev",
-    icon: "record_voice_over",
-    link: "https://forum.quasar.dev",
-  },
-  {
-    title: "Twitter",
-    caption: "@quasarframework",
-    icon: "rss_feed",
-    link: "https://twitter.quasar.dev",
-  },
-  {
-    title: "Facebook",
-    caption: "@QuasarFramework",
-    icon: "public",
-    link: "https://facebook.quasar.dev",
-  },
-  {
-    title: "Quasar Awesome",
-    caption: "Community Quasar projects",
-    icon: "favorite",
-    link: "https://awesome.quasar.dev",
-  },
+
 ];
 
 const essentialLinks = linksList;
+
 
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value;
