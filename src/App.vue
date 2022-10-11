@@ -10,8 +10,6 @@ import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
 import { useUserStore } from "./stores/user";
 
-console.log("Starting here");
-
 const router = useRouter();
 const userStore = useUserStore();
 const { user } = storeToRefs(userStore);

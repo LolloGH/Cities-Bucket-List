@@ -2,22 +2,20 @@
   <div class="q-pa-md">
     <q-btn-dropdown
       split
-      color="970C10"
+      color="red-10"
       push
       glossy
       no-caps
       icon="group_add"
       @click="onMainClick"
     >
-
       <q-list>
         <q-item clickable v-close-popup @click="onItemClick">
-
           <q-item-section>
-            <q-item-label>{{user.value}}</q-item-label>
-            <q-item-label caption>February 22, 2016</q-item-label>
+            <q-item-label>Hello {{ user }} </q-item-label>
+            <!-- :label="$t('yourName*')" -->
+            <q-item-label caption>February 22, 2016 </q-item-label>
           </q-item-section>
-
         </q-item>
 
         <q-item clickable v-close-popup @click="onItemClick">
@@ -51,24 +49,19 @@
 </template>
 
 <script setup>
-
 import { useUserStore } from "../stores/user";
 import { storeToRefs } from "pinia";
 
 const userStore = useUserStore();
 const { user } = storeToRefs(userStore);
 
-// export default {
-//   setup () {
-//     return {
-function  onMainClick () {
-        // console.log('Clicked on main button')
-      };
+//console.log(user.value);
 
-function  onItemClick () {
-        // console.log('Clicked on an Item')
-      }
-//     }
-//   }
-// }
+function onMainClick() {
+  // console.log('Clicked on main button')
+}
+
+function onItemClick() {
+  // console.log('Clicked on an Item')
+}
 </script>
