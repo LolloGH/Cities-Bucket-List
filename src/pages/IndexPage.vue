@@ -4,9 +4,13 @@
       <h1>Fly borderless with your mind.</h1>
       <h5>Note your dreams down and make them happen.</h5>
       <div class="auth-buttons">
-        <q-btn to="/auth" style="background: #738580; color: white" label="Register" />
-        <q-btn outline style="color: #738580;" label="Login" />
-    </div>
+        <q-btn
+          to="/auth"
+          style="background: #738580; color: white"
+          label="Register"
+        />
+        <q-btn to="/signin" outline style="color: #738580" label="Login" />
+      </div>
     </div>
 
     <!-- <img
@@ -42,11 +46,11 @@ h1 {
   color: #474440;
   margin-bottom: 5px;
   text-align: center;
-  }
+}
 
 h5 {
   color: #b9b7bd;
-  color: #868B8E;
+  color: #868b8e;
   margin-top: -5px;
   text-align: center;
 }
@@ -54,7 +58,6 @@ h5 {
 .auth-buttons {
   display: flex;
   justify-content: center;
-  gap: 15px
-
+  gap: 15px;
 }
 </style>

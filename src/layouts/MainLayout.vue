@@ -2,7 +2,6 @@
   <q-layout view="hhh Lpr lFf">
     <q-header elevated class="bg-grey">
       <q-toolbar>
-
         <q-btn
           flat
           round
@@ -12,8 +11,8 @@
           @click="toggleLeftDrawer"
         />
         <q-space></q-space>
-        <AuthButton/>
-        <!-- <q-btn flat round dense icon="search" class="q-mr-xs" /> -->
+        <AuthButton />
+
         <q-btn
           flat
           round
@@ -82,11 +81,9 @@ const linksList = [
     icon: "chat",
     link: "https://chat.quasar.dev",
   },
-
 ];
 
 const essentialLinks = linksList;
-
 
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value;

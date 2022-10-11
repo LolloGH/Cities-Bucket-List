@@ -14,7 +14,7 @@
           <q-item-section>
             <q-item-label>Hello {{ user }} </q-item-label>
             <!-- :label="$t('yourName*')" -->
-            <q-item-label caption>February 22, 2016 </q-item-label>
+            <q-item-label caption> {{ date }} </q-item-label>
           </q-item-section>
         </q-item>
 
@@ -54,6 +54,8 @@ import { storeToRefs } from "pinia";
 
 const userStore = useUserStore();
 const { user } = storeToRefs(userStore);
+
+const date = new Date(Date.now()).toDateString();
 
 //console.log(user.value);
 
