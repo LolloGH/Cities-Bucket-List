@@ -1,7 +1,7 @@
 <template>
   <div class="sign-up">
     <div class="q-pa-md" style="max-width: 500px; width: 30vw">
-      <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
+      <q-form @submit="handleLogin" @reset="onReset" class="q-gutter-md">
         <q-input standout v-model="email" filled type="email" hint="Email">
           <template v-slot:prepend>
             <q-icon name="mail" />
@@ -68,30 +68,35 @@ const { user, session } = storeToRefs(userStore);
 const name = ref(null);
 const email = ref(null);
 const password = ref(null);
-const confirmPassword = ref(null);
 const isPwd = ref(true);
-const isConfirmPwd = ref(true);
+const loading = ref(false);
 
 async function onSubmit() {
   try {
-    await userStore.signUp(email.value, password.value);
+    loading.value = true;
 
-    if (user.value && !session.value) {
-      console.log("Need to confirm registration");
+    await userStore.signIn(email.value);
+    console.log(user.value);
+    if (error) throw error;
+    alert("Check your email for the login link!");
+  } catch (error) {
+    alert(error.error_description || error.message);
+  } finally {
+    loading.value = false;
+  }
+
+  /*
+  try {
+    await userStore.signIn(email.value, password.value);
+    if (user.value && session.value) {
+      console.log(`User is: ${user.value.id} and Session is: ${session.value}`);
+      router.push({ path: "/myCities" });
+    } else if (!user.value && !session.value) {
+      console.log("Need to sign up");
+      console.log(`User is: ${user.value.id} and Session is: ${session.value}`);
     } else {
-      try {
-        await userStore.signIn(email.value, password.value);
-        if (user.value && session.value) router.push({ path: "/myCities" });
-      } catch (error) {
-        console.log(error);
-
-        $q.notify({
-          color: "red-5",
-          textColor: "white",
-          icon: "warning",
-          message: `An error occurred: ${error}`,
-        });
-      }
+      console.log("Need to confirm registration");
+      console.log(`User is: ${user.value.id} and Session is: ${session.value}`);
     }
   } catch (error) {
     console.log(error);
@@ -103,16 +108,28 @@ async function onSubmit() {
       message: `An error occurred: ${error}`,
     });
   }
+  */
 
-  onReset; // Reset the for
+  onReset(); // Reset the for
 }
 
 function onReset() {
   name.value = null;
   email.value = null;
   password.value = null;
-  confirmPassword.value = null;
+
   isPwd.value = true;
-  isConfirmPwd.value = true;
+}
+
+async function handleLogin() {
+  try {
+    loading.value = true;
+    await userStore.signIn(email.value, password.value);
+    alert("Check your email for the login link!");
+  } catch (error) {
+    alert(error.error_description || error.message);
+  } finally {
+    loading.value = false;
+  }
 }
 </script>

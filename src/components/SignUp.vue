@@ -110,7 +110,7 @@ async function onSubmit() {
   } else {
     try {
       await userStore.signUp(email.value, password.value, name.value);
-      await userStore.fetchSession();
+      //await userStore.fetchSession();
       if (user.value) {
         $q.notify({
           color: "green-4",

@@ -1,0 +1,2 @@
+1. add email minimum lenght and other validation to form
+2. complete sign in. not working as expected

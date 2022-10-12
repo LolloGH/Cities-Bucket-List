@@ -16,6 +16,8 @@ const { user } = storeToRefs(userStore);
 
 onMounted(async () => {
   try {
+    userStore.stateChange();
+
     await userStore.fetchUser(); // here we call fetch user
     if (!user.value) {
       console.log("not logged in");

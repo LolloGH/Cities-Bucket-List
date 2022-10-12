@@ -12,18 +12,18 @@
       <q-list>
         <q-item clickable v-close-popup @click="onItemClick">
           <q-item-section>
-            <q-item-label>Hello {{ user }} </q-item-label>
+            <q-item-label>{{ user.email }} </q-item-label>
             <!-- :label="$t('yourName*')" -->
             <q-item-label caption> {{ date }} </q-item-label>
           </q-item-section>
         </q-item>
 
-        <q-item clickable v-close-popup @click="onItemClick">
+        <q-item clickable v-close-popup @click="userStore.stateChange()">
           <q-item-section avatar>
             <q-avatar icon="folder" color="primary" text-color="white" />
           </q-item-section>
           <q-item-section>
-            <q-item-label>Photos</q-item-label>
+            <q-item-label>Check state change</q-item-label>
             <q-item-label caption>February 22, 2016</q-item-label>
           </q-item-section>
           <q-item-section side>
@@ -31,16 +31,13 @@
           </q-item-section>
         </q-item>
 
-        <q-item clickable v-close-popup @click="onItemClick">
+        <q-item clickable v-close-popup @click="onItemSignOut">
           <q-item-section avatar>
-            <q-avatar icon="assignment" color="secondary" text-color="white" />
+            <q-avatar icon="logout" color="blue-grey" text-color="white" />
           </q-item-section>
           <q-item-section>
-            <q-item-label>Vacation</q-item-label>
-            <q-item-label caption>February 22, 2016</q-item-label>
-          </q-item-section>
-          <q-item-section side>
-            <q-icon name="info" color="amber" />
+            <q-item-label>Logout</q-item-label>
+            <!-- <q-item-label caption>February 22, 2016</q-item-label> -->
           </q-item-section>
         </q-item>
       </q-list>
@@ -51,9 +48,15 @@
 <script setup>
 import { useUserStore } from "../stores/user";
 import { storeToRefs } from "pinia";
+import { useRouter } from "vue-router";
+import { onMounted } from "vue";
 
+//const $q = useQuasar();
+
+const router = useRouter();
 const userStore = useUserStore();
 const { user } = storeToRefs(userStore);
+const { session } = storeToRefs(userStore);
 
 const date = new Date(Date.now()).toDateString();
 
@@ -63,7 +66,35 @@ function onMainClick() {
   // console.log('Clicked on main button')
 }
 
-function onItemClick() {
-  // console.log('Clicked on an Item')
+async function testSession() {
+  try {
+    console.log(session.value);
+    await userStore.fetchSession();
+    console.log(session.value);
+  } catch (error) {
+    alert(error.error_description || error.message);
+  }
+}
+
+function testUser() {
+  try {
+    console.log(user.value);
+    userStore.fetchUser();
+    console.log(user.value);
+  } catch (error) {
+    alert(error.error_description || error.message);
+  }
+}
+
+async function onItemSignOut() {
+  try {
+    console.log(user.value);
+    await userStore.signOut();
+    console.log(user.value);
+
+    router.push({ path: "/" });
+  } catch (error) {
+    alert(error.error_description || error.message);
+  }
 }
 </script>
