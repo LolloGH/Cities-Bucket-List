@@ -1,7 +1,7 @@
 <template>
   <div class="sign-up">
     <div class="q-pa-md" style="max-width: 500px; width: 30vw">
-      <q-form @submit="handleLogin" @reset="onReset" class="q-gutter-md">
+      <q-form @submit="signIn" @reset="onReset" class="q-gutter-md">
         <q-input standout v-model="email" filled type="email" hint="Email">
           <template v-slot:prepend>
             <q-icon name="mail" />
@@ -71,21 +71,7 @@ const password = ref(null);
 const isPwd = ref(true);
 const loading = ref(false);
 
-async function onSubmit() {
-  try {
-    loading.value = true;
-
-    await userStore.signIn(email.value);
-    console.log(user.value);
-    if (error) throw error;
-    alert("Check your email for the login link!");
-  } catch (error) {
-    alert(error.error_description || error.message);
-  } finally {
-    loading.value = false;
-  }
-
-  /*
+/*
   try {
     await userStore.signIn(email.value, password.value);
     if (user.value && session.value) {
@@ -110,9 +96,6 @@ async function onSubmit() {
   }
   */
 
-  onReset(); // Reset the for
-}
-
 function onReset() {
   name.value = null;
   email.value = null;
@@ -121,15 +104,26 @@ function onReset() {
   isPwd.value = true;
 }
 
-async function handleLogin() {
-  try {
-    loading.value = true;
-    await userStore.signIn(email.value, password.value);
-    alert("Check your email for the login link!");
-  } catch (error) {
-    alert(error.error_description || error.message);
-  } finally {
-    loading.value = false;
+async function signIn() {
+  if (!password.value) {
+    $q.notify({
+      color: "red-5",
+      textColor: "white",
+      icon: "warning",
+      message: `Please sign in with an email and password.`,
+    });
+  } else {
+    try {
+      loading.value = true;
+      await userStore.signIn(email.value, password.value);
+
+      onReset(); // Reset the form
+      router.push({ path: "/myCities" });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      loading.value = false;
+    }
   }
 }
 </script>

@@ -2,11 +2,13 @@
 
 import { defineStore } from "pinia";
 import { supabase } from "../supabase";
+import { useAlertStore } from "../stores/alert";
 
 export const useUserStore = defineStore("user", {
   state: () => ({
     user: null,
     session: null,
+    returnUrl: null,
   }),
 
   actions: {
@@ -42,33 +44,27 @@ export const useUserStore = defineStore("user", {
     async signOut() {
       const { error } = await supabase.auth.signOut();
       //if (error) throw error;
+      this.user = null;
+      localStorage.removeItem("user");
+      router.push("/");
     },
 
     async signIn(email, password) {
-      // const { data, error } = await supabase.auth.signInWithOtp({
-      //   email: email,
-      // });
-
       const { user, session, error } = await supabase.auth.signIn({
         email: email,
         password: password,
       });
-      //if (error) throw error;
+      if (error) {
+        const alertStore = useAlertStore();
+        alertStore.error(error);
+        // alert(error.error_description || error.message);
+        throw error;
+      }
 
-      //const { error } = await supabase.auth.signIn({ email: email });
-      /*
-      const { user, error } = await supabase.auth.signInWithPassword({
-        email: email,
-        password: password,
-      });
-*/
-      // console.log(user);
-
-      // if (user) {
-      //   this.user = user;
-      //   this.session = session;
-      // }
-      // if (error) throw error;
+      if (user) {
+        this.user = user;
+        this.session = session;
+      }
     },
 
     async stateChange() {

@@ -42,6 +42,7 @@
     </q-drawer>
 
     <q-page-container>
+      <MyAlert />
       <router-view />
     </q-page-container>
   </q-layout>
@@ -59,6 +60,7 @@ import { defineComponent, ref, onMounted } from "vue";
 import EssentialLink from "components/EssentialLink.vue";
 import AuthButton from "src/components/AuthButton.vue";
 import { useRouter } from "vue-router";
+import MyAlert from "../components/MyAlert.vue";
 
 const leftDrawerOpen = ref(false);
 const router = useRouter();

@@ -2,16 +2,23 @@
   <div class="sign-up">
     <div class="q-pa-md" style="max-width: 500px; width: 30vw">
       <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
-        <q-input
+        <!-- <q-input
           filled
           v-model="name"
           label="Your name *"
           hint="Name and surname"
           lazy-rules
           :rules="[(val) => (val && val.length > 0) || 'Please type something']"
-        />
+        /> -->
 
-        <q-input standout v-model="email" filled type="email" hint="Email">
+        <q-input
+          label="Your email address *"
+          standout
+          v-model="email"
+          filled
+          type="email"
+          hint="Email"
+        >
           <template v-slot:prepend>
             <q-icon name="mail" />
           </template>
@@ -92,7 +99,7 @@ const router = useRouter();
 const userStore = useUserStore();
 const { user, session } = storeToRefs(userStore);
 
-const name = ref(null);
+// const name = ref(null);
 const email = ref(null);
 const password = ref(null);
 const confirmPassword = ref(null);
@@ -109,7 +116,7 @@ async function onSubmit() {
     });
   } else {
     try {
-      await userStore.signUp(email.value, password.value, name.value);
+      await userStore.signUp(email.value, password.value);
       //await userStore.fetchSession();
       if (user.value) {
         $q.notify({
@@ -137,7 +144,7 @@ async function onSubmit() {
 }
 
 function onReset() {
-  name.value = null;
+  //  name.value = null;
   email.value = null;
   password.value = null;
   confirmPassword.value = null;
