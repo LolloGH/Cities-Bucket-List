@@ -12,6 +12,12 @@ const routes = [
   },
 
   {
+    path: "/signin",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("components/SignIn.vue") }],
+  },
+
+  {
     path: "/myCities",
     component: () => import("layouts/MainLayout.vue"),
     children: [
@@ -20,9 +26,17 @@ const routes = [
   },
 
   {
-    path: "/signin",
+    path: "/newCity",
     component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", component: () => import("components/SignIn.vue") }],
+    children: [{ path: "", component: () => import("components/NewCity.vue") }],
+  },
+
+  {
+    path: "/citySearch",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      { path: "", component: () => import("components/CitySearch.vue") },
+    ],
   },
 
   // Always leave this as last one,

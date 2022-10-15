@@ -10,6 +10,7 @@ import { useAlertStore } from "../stores/alert";
 export const useUserStore = defineStore("user", {
   state: () => ({
     user: null,
+    //   userID: null,
     session: null,
     returnUrl: null,
   }),
@@ -68,6 +69,7 @@ export const useUserStore = defineStore("user", {
       if (user) {
         this.user = user;
         this.session = session;
+        //this.userID = user.id;
       }
     },
 

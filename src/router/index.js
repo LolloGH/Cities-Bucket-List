@@ -42,7 +42,7 @@ export default route(function (/* { store, ssrContext } */) {
     alertStore.clear();
 
     // redirect to login page if not logged in and trying to access a restricted page
-    const publicPages = ["/", "/signin", "/auth"];
+    const publicPages = ["/", "/signin", "/auth", "/newCity"];
     const authRequired = !publicPages.includes(to.path);
     const userStore = useUserStore();
 

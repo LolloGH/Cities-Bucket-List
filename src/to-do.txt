@@ -1,3 +1,5 @@
 1. add email minimum lenght and other validation to form
-2. complete sign in. not working as expected
-3. add loaading component just as the MyAlert one
+2. add user name and user profile to db
+
+
+check quasar parallax and timeline

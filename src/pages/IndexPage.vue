@@ -3,13 +3,20 @@
     <div class="header-wrapper">
       <h1>Fly borderless with your mind.</h1>
       <h5>Note your dreams down and make them happen.</h5>
-      <div class="auth-buttons">
+      <div class="auth-buttons" v-if="!user">
         <q-btn
           to="/auth"
           style="background: #738580; color: white"
           label="Register"
         />
         <q-btn to="/signin" outline style="color: #738580" label="Login" />
+      </div>
+      <div class="auth-buttons" v-else>
+        <q-btn
+          @click="onItemSignOut"
+          style="background: #738580; color: white"
+          label="Logout"
+        />
       </div>
     </div>
 
@@ -22,7 +29,26 @@
 </template>
 
 <script setup>
-const name = "IndexPage";
+import { useAlertStore } from "../stores/alert";
+import { useUserStore } from "../stores/user";
+import { storeToRefs } from "pinia";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+
+const userStore = useUserStore();
+const alertStore = useAlertStore();
+const { user } = storeToRefs(userStore);
+
+async function onItemSignOut() {
+  try {
+    await userStore.signOut();
+    router.push({ path: "/" });
+  } catch (error) {
+    alertStore.error(error);
+    throw error;
+  }
+}
 </script>
 
 <style scoped>

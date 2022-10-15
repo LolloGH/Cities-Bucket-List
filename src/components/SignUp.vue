@@ -67,7 +67,10 @@
         </div>
       </q-form>
       <q-space></q-space>
-      <div>Already have an account? Sign In</div>
+      <div class="login-link">
+        Already have an account?&nbsp;&nbsp;
+        <a href="/signin"> Sign In</a>
+      </div>
     </div>
   </div>
 </template>
@@ -83,6 +86,12 @@
 .form-buttons {
   display: flex;
   justify-content: space-between;
+}
+
+.login-link {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
 }
 </style>
 

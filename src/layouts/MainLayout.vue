@@ -29,6 +29,8 @@
           M<span class="redLetter">y</span> Citi<span class="redLetter">e</span
           >s <strong>Bucket</strong> Li<span class="redLetter">s</span>t
         </q-toolbar-title>
+        <q-btn to="/myCities" outline style="color: #738580" label="MyCities" />
+        <q-btn to="/citySearch" outline style="color: #738580" label="Search" />
       </q-toolbar>
     </q-header>
 
@@ -65,21 +67,18 @@ import AuthButton from "src/components/AuthButton.vue";
 import { useRouter } from "vue-router";
 
 import MyAlert from "../components/MyAlert.vue";
-
 import { useAlertStore } from "../stores/alert";
-//import { storeToRefs } from "pinia";
 
 const alertStore = useAlertStore();
-//const { loading } = storeToRefs(alertStore);
 
 const leftDrawerOpen = ref(false);
 const router = useRouter();
 const linksList = [
   {
-    title: "Docs",
-    caption: "quasar.dev",
-    icon: "school",
-    link: "https://quasar.dev",
+    title: "New Destination",
+    caption: "Add a new city to your bucket list",
+    icon: "trolley",
+    link: "/#/newCity",
   },
   {
     title: "Github",

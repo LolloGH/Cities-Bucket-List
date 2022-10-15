@@ -67,37 +67,11 @@ const userStore = useUserStore();
 const { user, session } = storeToRefs(userStore);
 
 const alertStore = useAlertStore();
-const { loading } = storeToRefs(alertStore);
 
 const name = ref(null);
 const email = ref(null);
 const password = ref(null);
 const isPwd = ref(true);
-
-/*
-  try {
-    await userStore.signIn(email.value, password.value);
-    if (user.value && session.value) {
-      console.log(`User is: ${user.value.id} and Session is: ${session.value}`);
-      router.push({ path: "/myCities" });
-    } else if (!user.value && !session.value) {
-      console.log("Need to sign up");
-      console.log(`User is: ${user.value.id} and Session is: ${session.value}`);
-    } else {
-      console.log("Need to confirm registration");
-      console.log(`User is: ${user.value.id} and Session is: ${session.value}`);
-    }
-  } catch (error) {
-    console.log(error);
-
-    $q.notify({
-      color: "red-5",
-      textColor: "white",
-      icon: "warning",
-      message: `An error occurred: ${error}`,
-    });
-  }
-  */
 
 function onReset() {
   name.value = null;
@@ -122,7 +96,7 @@ async function signIn() {
       });
 
       await userStore.signIn(email.value, password.value);
-      console.log(session);
+      //  console.log(session);
       onReset(); // Reset the form
       router.push({ path: "/myCities" });
     } catch (error) {
