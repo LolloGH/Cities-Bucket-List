@@ -1,6 +1,7 @@
 <template>
   <div class="q-pa-md">
     <q-btn-dropdown
+      v-if="user !== null"
       split
       color="Gunmetal-Gray"
       push

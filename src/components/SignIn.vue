@@ -117,28 +117,18 @@ async function signIn() {
     });
   } else {
     try {
-      //alertStore.startLoading();
-      console.log(`before startloading: ${loading.value}`);
-
-      console.log("entering timeout and setting to start loading");
       $q.loading.show({
         delay: 400, // ms
       });
-      //alertStore.startLoading();
 
-      console.log(loading.value);
-      /*
-await userStore.signIn(email.value, password.value);
+      await userStore.signIn(email.value, password.value);
+      console.log(session);
       onReset(); // Reset the form
       router.push({ path: "/myCities" });
-    */
     } catch (error) {
       console.log(error);
     } finally {
-      setTimeout(() => {
-        console.log(`in finally bloack: ${loading.value}`);
-        $q.loading.hide();
-      }, 3000); //alertStore.stopLoading();
+      $q.loading.hide();
     }
   }
 }

@@ -13,16 +13,19 @@
         <q-space></q-space>
         <AuthButton />
 
-        <q-btn
+        <!-- <q-btn
           flat
           round
           dense
           icon="group_add"
           @click="router.push({ path: '/auth' })"
-        />
+        /> -->
       </q-toolbar>
       <q-toolbar inset>
-        <q-toolbar-title>
+        <q-toolbar-title
+          class="cursor-pointer"
+          @click="router.push({ path: '/' })"
+        >
           M<span class="redLetter">y</span> Citi<span class="redLetter">e</span
           >s <strong>Bucket</strong> Li<span class="redLetter">s</span>t
         </q-toolbar-title>
@@ -46,7 +49,6 @@
       <router-view />
     </q-page-container>
   </q-layout>
-  <!-- <LoadingComponent :is-loading="loading" /> -->
 </template>
 
 <style scoped>
@@ -61,13 +63,14 @@ import { defineComponent, ref, onMounted } from "vue";
 import EssentialLink from "components/EssentialLink.vue";
 import AuthButton from "src/components/AuthButton.vue";
 import { useRouter } from "vue-router";
+
 import MyAlert from "../components/MyAlert.vue";
-import LoadingComponent from "../components/LoadingComponent.vue";
+
 import { useAlertStore } from "../stores/alert";
-import { storeToRefs } from "pinia";
+//import { storeToRefs } from "pinia";
 
 const alertStore = useAlertStore();
-const { loading } = storeToRefs(alertStore);
+//const { loading } = storeToRefs(alertStore);
 
 const leftDrawerOpen = ref(false);
 const router = useRouter();

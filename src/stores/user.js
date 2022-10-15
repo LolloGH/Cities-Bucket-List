@@ -3,6 +3,9 @@
 import { defineStore } from "pinia";
 import { supabase } from "../supabase";
 import { useAlertStore } from "../stores/alert";
+//import { useRouter } from "vue-router";
+
+//const router = useRouter();
 
 export const useUserStore = defineStore("user", {
   state: () => ({
@@ -46,7 +49,7 @@ export const useUserStore = defineStore("user", {
       //if (error) throw error;
       this.user = null;
       localStorage.removeItem("user");
-      router.push("/");
+      //router.push({ path: "/" });
     },
 
     async signIn(email, password) {
@@ -56,6 +59,7 @@ export const useUserStore = defineStore("user", {
       });
       if (error) {
         const alertStore = useAlertStore();
+
         alertStore.error(error);
         // alert(error.error_description || error.message);
         throw error;

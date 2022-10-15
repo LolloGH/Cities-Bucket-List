@@ -127,8 +127,8 @@ async function onSubmit() {
         });
 
         onReset; // Reset the form
-        //console.log(`user ${user.value} LOGGED IN`);
-        router.push({ path: "/auth" });
+
+        router.push({ path: "/signin" });
       }
     } catch (error) {
       console.log(error);
