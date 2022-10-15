@@ -56,6 +56,7 @@
 import { useQuasar } from "quasar";
 import { ref, onMounted } from "vue";
 import { useUserStore } from "../stores/user";
+import { useAlertStore } from "../stores/alert";
 import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
 
@@ -65,11 +66,13 @@ const router = useRouter();
 const userStore = useUserStore();
 const { user, session } = storeToRefs(userStore);
 
+const alertStore = useAlertStore();
+const { loading } = storeToRefs(alertStore);
+
 const name = ref(null);
 const email = ref(null);
 const password = ref(null);
 const isPwd = ref(true);
-const loading = ref(false);
 
 /*
   try {
@@ -114,15 +117,28 @@ async function signIn() {
     });
   } else {
     try {
-      loading.value = true;
-      await userStore.signIn(email.value, password.value);
+      //alertStore.startLoading();
+      console.log(`before startloading: ${loading.value}`);
 
+      console.log("entering timeout and setting to start loading");
+      $q.loading.show({
+        delay: 400, // ms
+      });
+      //alertStore.startLoading();
+
+      console.log(loading.value);
+      /*
+await userStore.signIn(email.value, password.value);
       onReset(); // Reset the form
       router.push({ path: "/myCities" });
+    */
     } catch (error) {
       console.log(error);
     } finally {
-      loading.value = false;
+      setTimeout(() => {
+        console.log(`in finally bloack: ${loading.value}`);
+        $q.loading.hide();
+      }, 3000); //alertStore.stopLoading();
     }
   }
 }

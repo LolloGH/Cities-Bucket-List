@@ -46,6 +46,7 @@
       <router-view />
     </q-page-container>
   </q-layout>
+  <!-- <LoadingComponent :is-loading="loading" /> -->
 </template>
 
 <style scoped>
@@ -61,6 +62,12 @@ import EssentialLink from "components/EssentialLink.vue";
 import AuthButton from "src/components/AuthButton.vue";
 import { useRouter } from "vue-router";
 import MyAlert from "../components/MyAlert.vue";
+import LoadingComponent from "../components/LoadingComponent.vue";
+import { useAlertStore } from "../stores/alert";
+import { storeToRefs } from "pinia";
+
+const alertStore = useAlertStore();
+const { loading } = storeToRefs(alertStore);
 
 const leftDrawerOpen = ref(false);
 const router = useRouter();

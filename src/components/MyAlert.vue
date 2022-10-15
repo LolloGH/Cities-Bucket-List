@@ -2,9 +2,9 @@
 import { storeToRefs } from "pinia";
 import { useAlertStore } from "../stores/alert";
 import { ref, onUpdated } from "vue";
-import { useQuasar } from "quasar";
+//import { useQuasar } from "quasar";
 
-const $q = useQuasar();
+//const $q = useQuasar();
 
 const alertStore = useAlertStore();
 const { alert } = storeToRefs(alertStore);
@@ -12,11 +12,8 @@ const persistent = ref(false);
 const title = ref("");
 const className = ref("");
 
-console.log(alert.value !== null);
-
 onUpdated(() => {
   if (alert.value !== null) {
-    //if (!alert.value.message) persistent.value = true;
     persistent.value = true;
 
     if (alert.value.type == "alert-success") {
@@ -25,7 +22,7 @@ onUpdated(() => {
     }
     if (alert.value.type == "alert-danger") {
       title.value = "Warning";
-      className.value = "bg-negative text-white";
+      className.value = "bg-warning text-white";
     }
   }
 });
@@ -53,15 +50,4 @@ onUpdated(() => {
       </q-card-actions>
     </q-card>
   </q-dialog>
-
-  <!--  <div v-if="alert">
-      <div class="m-3">
-      <div class="alert alert-dismissable" :class="alert.type">
-        <button @click="alertStore.clear()" class="btn btn-link close">
-          ×
-        </button>
-        {{ alert.message.message }}
-      </div>
-    </div>
-  </div> -->
 </template>

@@ -2,7 +2,7 @@
   <div class="q-pa-md">
     <q-btn-dropdown
       split
-      color="red-10"
+      color="Gunmetal-Gray"
       push
       glossy
       no-caps

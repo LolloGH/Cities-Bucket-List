@@ -5,3 +5,10 @@
 body {
   font-family: "Lora", serif;
 }
+
+.text-Gunmetal-Gray {
+  color: #738580 !important;
+}
+.bg-Gunmetal-Gray {
+  background: #738580 !important;
+}

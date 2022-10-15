@@ -4,6 +4,7 @@ export const useAlertStore = defineStore({
   id: "alert",
   state: () => ({
     alert: null,
+    loading: false,
   }),
 
   actions: {
@@ -15,6 +16,15 @@ export const useAlertStore = defineStore({
     },
     clear() {
       this.alert = null;
+    },
+
+    // loading widget actions
+    startLoading() {
+      this.loading = true;
+    },
+
+    stopLoading() {
+      this.loading = false;
     },
   },
 });
