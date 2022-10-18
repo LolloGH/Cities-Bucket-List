@@ -1,5 +1,5 @@
 1. add email minimum lenght and other validation to form
 2. add user name and user profile to db
-
+3. make the city select a signle value one
 
 check quasar parallax and timeline

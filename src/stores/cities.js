@@ -5,17 +5,16 @@ export const useCitiesStore = defineStore({
   id: "cities",
   state: () => ({
     cities: null,
-    /* cityName: "",
-    visitDate: "",
-    cityHighlights: null, */
   }),
 
   actions: {
-    async insertCity(userID) {
+    async insertCity(cName, userID, vDate, cHighlights) {
       const { data, error } = await supabase.from("cities").insert([
         {
-          city_name: "Roma",
+          city_name: cName,
           user_id: userID,
+          visit_date: vDate,
+          city_highlights: cHighlights,
         },
       ]);
 

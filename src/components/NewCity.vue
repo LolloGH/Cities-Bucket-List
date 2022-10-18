@@ -1,65 +1,46 @@
 <template>
-  <div class="enter-city">
-    Hey buddy, welcome back! Cool, where we we going next?
-    <div class="q-pa-md" style="max-width: 500px; width: 30vw">
+  <div class="input-city">
+    <div class="text-h5 center">
+      Hey buddy, welcome back! <br />Where are we going next?
+    </div>
+    <div class="q-pa-md" style="max-width: 500px; width: 60vw">
       <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
-        <!-- <q-input
-          filled
-          v-model="name"
-          label="Your name *"
-          hint="Name and surname"
-          lazy-rules
-          :rules="[(val) => (val && val.length > 0) || 'Please type something']"
-        /> -->
+        <CitySearch v-model="cityName" />
 
         <q-input
-          label="Your email address *"
-          standout
-          v-model="email"
           filled
-          type="email"
-          hint="Email"
-        >
-          <template v-slot:prepend>
-            <q-icon name="mail" />
-          </template>
-        </q-input>
-
-        <q-input
-          v-model="password"
-          filled
-          :type="isPwd ? 'password' : 'text'"
-          hint="Password"
+          v-model="date"
+          mask="date"
+          :rules="['date']"
+          hint="When are we travelling?"
         >
           <template v-slot:append>
-            <q-icon
-              :name="isPwd ? 'visibility_off' : 'visibility'"
-              class="cursor-pointer"
-              @click="isPwd = !isPwd"
-            />
+            <q-icon name="event" class="cursor-pointer">
+              <q-popup-proxy
+                cover
+                transition-show="scale"
+                transition-hide="scale"
+              >
+                <q-date v-model="date">
+                  <div class="row items-center justify-end">
+                    <q-btn v-close-popup label="Close" color="primary" flat />
+                  </div>
+                </q-date>
+              </q-popup-proxy>
+            </q-icon>
           </template>
         </q-input>
 
         <q-input
-          v-model="confirmPassword"
+          v-model="text"
           filled
-          :type="isConfirmPwd ? 'password' : 'text'"
-          hint="Confirm Password"
-        >
-          <template v-slot:append>
-            <q-icon
-              :name="isConfirmPwd ? 'visibility_off' : 'visibility'"
-              class="cursor-pointer"
-              @click="isConfirmPwd = !isConfirmPwd"
-            />
-          </template>
-        </q-input>
-
-        <!-- <q-toggle v-model="accept" label="I accept the license and terms" /> -->
+          type="textarea"
+          hint="Anything special that you want to note down for this destination?"
+        />
 
         <div class="form-buttons">
           <q-btn
-            label="Create an account"
+            label="Let's go!"
             type="submit"
             style="background: #738580; color: white"
           />
@@ -67,18 +48,17 @@
           <q-btn outline style="color: #738580" label="Reset" type="reset" />
         </div>
       </q-form>
-      <q-space></q-space>
-      <div>Already have an account? Sign In</div>
     </div>
   </div>
 </template>
 
 <style scoped>
-.enter-city {
+.input-city {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 100px 350px;
+  margin: 50px 350px;
 }
 
 .form-buttons {
@@ -93,21 +73,25 @@ import { ref, onMounted } from "vue";
 import { useUserStore } from "../stores/user";
 import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
+import { useCitiesStore } from "../stores/cities";
+import CitySearch from "../components/CitySearch.vue";
 
 const $q = useQuasar();
 
 const router = useRouter();
 const userStore = useUserStore();
+const cityStore = useCitiesStore();
 const { user, session } = storeToRefs(userStore);
+const { city } = storeToRefs(cityStore);
+
+const date = ref("2022/12/01");
 
 // const name = ref(null);
-const email = ref(null);
-const password = ref(null);
-const confirmPassword = ref(null);
-const isPwd = ref(true);
-const isConfirmPwd = ref(true);
+const cityName = ref(null);
+const text = ref("");
 
 async function onSubmit() {
+  /*
   if (password.value !== confirmPassword.value) {
     $q.notify({
       color: "red-5",
@@ -142,14 +126,21 @@ async function onSubmit() {
       });
     }
   }
+  */
+  userStore.fetchUser();
+  console.log(cityName.value[0], text.value, date.value, user.value.id);
+
+  cityStore.insertCity(
+    cityName.value[0],
+    user.value.id,
+    date.value,
+    text.value
+  );
 }
 
 function onReset() {
-  //  name.value = null;
-  email.value = null;
-  password.value = null;
-  confirmPassword.value = null;
-  isPwd.value = true;
-  isConfirmPwd.value = true;
+  text.value = null;
+  date.value = "2022/12/01";
+  cityName.value = null;
 }
 </script>
