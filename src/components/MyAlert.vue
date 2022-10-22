@@ -18,7 +18,7 @@ onUpdated(() => {
 
     if (alert.value.type == "alert-success") {
       title.value = "Info";
-      className.value = "bg-positive text-white";
+      className.value = "bg-light-green-8 text-white";
     }
     if (alert.value.type == "alert-danger") {
       title.value = "Warning";
@@ -42,7 +42,7 @@ onUpdated(() => {
       </q-card-section>
 
       <q-card-section class="q-pt-none">
-        {{ alert.message.message }}
+        {{ alert.message }}
       </q-card-section>
 
       <q-card-actions align="right" class="bg-white text-teal">

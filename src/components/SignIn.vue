@@ -1,57 +1,3 @@
-<template>
-  <div class="sign-up">
-    <div class="q-pa-md" style="max-width: 500px; width: 30vw">
-      <q-form @submit="signIn" @reset="onReset" class="q-gutter-md">
-        <q-input standout v-model="email" filled type="email" hint="Email">
-          <template v-slot:prepend>
-            <q-icon name="mail" />
-          </template>
-        </q-input>
-
-        <q-input
-          v-model="password"
-          filled
-          :type="isPwd ? 'password' : 'text'"
-          hint="Password"
-        >
-          <template v-slot:append>
-            <q-icon
-              :name="isPwd ? 'visibility_off' : 'visibility'"
-              class="cursor-pointer"
-              @click="isPwd = !isPwd"
-            />
-          </template>
-        </q-input>
-
-        <div class="form-buttons">
-          <q-btn
-            label="Login"
-            type="submit"
-            style="background: #738580; color: white"
-          />
-
-          <q-btn outline style="color: #738580" label="Reset" type="reset" />
-        </div>
-      </q-form>
-      <q-space></q-space>
-    </div>
-  </div>
-</template>
-
-<style scoped>
-.sign-up {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 100px 350px;
-}
-
-.form-buttons {
-  display: flex;
-  justify-content: space-between;
-}
-</style>
-
 <script setup>
 import { useQuasar } from "quasar";
 import { ref, onMounted } from "vue";
@@ -107,3 +53,57 @@ async function signIn() {
   }
 }
 </script>
+
+<template>
+  <div class="sign-up">
+    <div class="q-pa-md" style="max-width: 500px; width: 30vw">
+      <q-form @submit="signIn" @reset="onReset" class="q-gutter-md">
+        <q-input standout v-model="email" filled type="email" hint="Email">
+          <template v-slot:prepend>
+            <q-icon name="mail" />
+          </template>
+        </q-input>
+
+        <q-input
+          v-model="password"
+          filled
+          :type="isPwd ? 'password' : 'text'"
+          hint="Password"
+        >
+          <template v-slot:append>
+            <q-icon
+              :name="isPwd ? 'visibility_off' : 'visibility'"
+              class="cursor-pointer"
+              @click="isPwd = !isPwd"
+            />
+          </template>
+        </q-input>
+
+        <div class="form-buttons">
+          <q-btn
+            label="Login"
+            type="submit"
+            style="background: #738580; color: white"
+          />
+
+          <q-btn outline style="color: #738580" label="Reset" type="reset" />
+        </div>
+      </q-form>
+      <q-space></q-space>
+    </div>
+  </div>
+</template>
+
+<style scoped>
+.sign-up {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 100px 350px;
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+</style>

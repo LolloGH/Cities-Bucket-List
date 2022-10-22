@@ -33,3 +33,10 @@ body {
 .bg-Pewter {
   background: #b9b7bd !important;
 }
+
+.text-myRed {
+  color: #970c10 !important;
+}
+.bg-myRed {
+  background: #970c10 !important;
+}

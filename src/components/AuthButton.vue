@@ -11,7 +11,7 @@
       @click="onMainClick"
     >
       <q-list>
-        <q-item clickable v-close-popup @click="onItemClick">
+        <q-item clickable v-close-popup>
           <q-item-section>
             <q-item-label>{{ user.email }} </q-item-label>
             <!-- :label="$t('yourName*')" -->

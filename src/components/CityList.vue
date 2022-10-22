@@ -17,6 +17,8 @@ const { alert } = storeToRefs(alertStore);
 const router = useRouter();
 
 const prompt = ref(false);
+const confirm = ref(false);
+
 const cName = ref("");
 const vDate = ref("");
 const cHighlights = ref("");
@@ -44,23 +46,32 @@ async function getCities() {
   await cityStore.fetchCities();
 }
 
-function onClick() {
-  //console.log("Clicked on a fab action");
-}
-
-function onDelete(itemID, itemName) {
-  cityStore.deleteCity(itemID);
-  alertStore.error(
-    `${itemName} has been correctly removed for your bucket list`
-  );
-}
-
-function onUpdate(itemName, itemDate, itemHighlights, id) {
-  prompt.value = true;
+function onClick(itemName, itemDate, itemHighlights, id) {
   cName.value = itemName;
   vDate.value = itemDate;
   cHighlights.value = itemHighlights;
   itemID.value = id;
+}
+
+function onDelete() {
+  const cityName = cName.value;
+  confirm.value = true;
+  cityStore.deleteCity(itemID.value);
+  alertStore.success(
+    `${cityName} has been correctly removed for your bucket list`
+  );
+  cName.value = "";
+  vDate.value = "";
+  cHighlights.value = "";
+  itemID.value = "";
+}
+
+function onUpdate(itemName, itemDate, itemHighlights, id) {
+  prompt.value = true;
+  // cName.value = itemName;
+  // vDate.value = itemDate;
+  // cHighlights.value = itemHighlights;
+  // itemID.value = id;
 }
 
 async function confirmUpdate() {
@@ -78,7 +89,30 @@ onUpdated(() => {
 </script>
 
 <template>
-  <div class="dial">
+  <div class="delete-confirm">
+    <q-dialog v-model="confirm" persistent>
+      <q-card>
+        <q-card-section class="row items-center">
+          <q-avatar icon="priority_high" color="warning" text-color="white" />
+          <span class="q-ml-sm"
+            >Are you sure you want to remove {{ cName }} from your list?</span
+          >
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="Cancel" text-color="Gunmetal-Gray" v-close-popup />
+          <q-btn
+            flat
+            label="Delete"
+            color="Gunmetal-Gray"
+            @click="onDelete()"
+            v-close-popup
+          />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+  </div>
+  <div class="edit-dialog">
     <q-dialog v-model="prompt" persistent>
       <q-card style="min-width: 350px">
         <q-card-section>
@@ -145,6 +179,14 @@ onUpdated(() => {
           icon="keyboard_arrow_right"
           direction="right"
           color="Gunmetal-Gray"
+          @click="
+            onClick(
+              city.city_name,
+              city.visit_date,
+              city.city_highlights,
+              city.id
+            )
+          "
         >
           <q-fab-action
             @click="
@@ -158,16 +200,20 @@ onUpdated(() => {
             color="Pewter"
             icon="edit"
           />
-          <q-fab-action
-            @click="onDelete(city.id, city.city_name)"
-            color="Pewter"
-            icon="delete"
-          />
+          <q-fab-action @click="confirm = true" color="Pewter" icon="delete" />
         </q-fab>
         <!-- </q-page-sticky> -->
       </q-card-section>
     </q-card>
   </div>
+  <q-page-sticky position="bottom-right" :offset="[18, 18]">
+    <q-btn
+      fab
+      icon="add"
+      color="myRed"
+      @click="router.push({ path: '/newCity' })"
+    />
+  </q-page-sticky>
 </template>
 
 <style lang="sass" scoped>
