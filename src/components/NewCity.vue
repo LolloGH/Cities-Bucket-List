@@ -75,6 +75,11 @@ import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
 import { useCitiesStore } from "../stores/cities";
 import CitySearch from "../components/CitySearch.vue";
+import { createApi } from "unsplash-js";
+
+const unsplash = createApi({
+  accessKey: import.meta.env.VITE_UNSPLASH_API_KEY,
+});
 
 const $q = useQuasar();
 
@@ -90,51 +95,48 @@ const date = ref("2022/12/01");
 const cityName = ref(null);
 const text = ref("");
 
-async function onSubmit() {
-  /*
-  if (password.value !== confirmPassword.value) {
-    $q.notify({
-      color: "red-5",
-      textColor: "white",
-      icon: "warning",
-      message: "Passwords do not match.",
-    });
+const imageURL = ref("");
+
+async function getImage(city) {
+  const result = await unsplash.search.getPhotos({
+    query: city,
+    page: 1,
+    perPage: 1,
+
+    orientation: "landscape",
+  });
+
+  if (result.errors) {
+    // handle error here
+    console.log("error occurred: ", result.errors[0]);
   } else {
-    try {
-      await userStore.signUp(email.value, password.value);
-      //await userStore.fetchSession();
-      if (user.value) {
-        $q.notify({
-          color: "green-4",
-          textColor: "white",
-          icon: "cloud_done",
-          message: "Submitted. Please check your inbox.",
-        });
-
-        onReset; // Reset the form
-
-        router.push({ path: "/signin" });
-      }
-    } catch (error) {
-      console.log(error);
-
-      $q.notify({
-        color: "red-5",
-        textColor: "white",
-        icon: "warning",
-        message: `An error occurred: ${error}`,
-      });
-    }
+    // handle success here
+    const photo = result.response;
+    console.log(photo);
+    imageURL.value = photo.results[0].urls.regular.toString();
+    console.log(imageURL.value);
   }
-  */
+}
+
+async function onSubmit() {
   userStore.fetchUser();
-  console.log(cityName.value[0], text.value, date.value, user.value.id);
+
+  await getImage(cityName.value[0]);
+
+  console.log(
+    cityName.value[0],
+    text.value,
+    date.value,
+    user.value.id,
+    imageURL.value
+  );
 
   cityStore.insertCity(
     cityName.value[0],
     user.value.id,
     date.value,
-    text.value
+    text.value,
+    imageURL.value
   );
 
   router.push({ path: "/myCities" });

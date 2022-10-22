@@ -9,13 +9,14 @@ export const useCitiesStore = defineStore({
   }),
 
   actions: {
-    async insertCity(cName, userID, vDate, cHighlights) {
+    async insertCity(cName, userID, vDate, cHighlights, cImage) {
       const { data, error } = await supabase.from("cities").insert([
         {
           city_name: cName,
           user_id: userID,
           visit_date: vDate,
           city_highlights: cHighlights,
+          image_URL: cImage,
         },
       ]);
 
