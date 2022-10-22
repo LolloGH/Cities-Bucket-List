@@ -1,7 +1,7 @@
 <template>
   <div class="input-city">
     <div class="text-h5 center">
-      Hey buddy, welcome back! <br />Where are we going next?
+      Hi there, changing your mind? Let's update!
     </div>
     <div class="q-pa-md" style="max-width: 500px; width: 60vw">
       <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">

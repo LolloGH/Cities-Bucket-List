@@ -32,6 +32,14 @@ const routes = [
   },
 
   {
+    path: "/updateCity",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      { path: "", component: () => import("components/UpdateCity.vue") },
+    ],
+  },
+
+  {
     path: "/citySearch",
     component: () => import("layouts/MainLayout.vue"),
     children: [
