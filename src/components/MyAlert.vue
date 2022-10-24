@@ -2,17 +2,29 @@
 import { storeToRefs } from "pinia";
 import { useAlertStore } from "../stores/alert";
 import { ref, onUpdated } from "vue";
-//import { useQuasar } from "quasar";
+import { useQuasar } from "quasar";
 
-//const $q = useQuasar();
+const $q = useQuasar();
 
 const alertStore = useAlertStore();
 const { alert } = storeToRefs(alertStore);
 const persistent = ref(false);
 const title = ref("");
 const className = ref("");
+const alertTypeFade = ref(true);
+
+function triggerPositive() {
+  $q.notify({
+    type: "positive",
+    message: alert.value.message,
+  });
+}
 
 onUpdated(() => {
+  if (alert.value !== null && alertTypeFade.value) {
+    triggerPositive();
+  }
+
   if (alert.value !== null) {
     persistent.value = true;
 
@@ -30,7 +42,7 @@ onUpdated(() => {
 
 <template>
   <q-dialog
-    v-if="alert"
+    v-if="alert && !alertTypeFade"
     v-model="persistent"
     persistent
     transition-show="scale"
@@ -50,4 +62,5 @@ onUpdated(() => {
       </q-card-actions>
     </q-card>
   </q-dialog>
+  <div v-if="alert && alertTypeFade"></div>
 </template>

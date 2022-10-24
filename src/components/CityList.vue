@@ -44,7 +44,7 @@ function onDelete() {
   const cityName = cName.value;
   confirm.value = true;
   cityStore.deleteCity(itemID.value);
-  alertStore.success(
+  alertStore.successFade(
     `${cityName} has been correctly removed for your bucket list`
   );
   cName.value = "";
