@@ -3,7 +3,7 @@ import { useCitiesStore } from "../stores/cities";
 import { useUserStore } from "../stores/user";
 import { useAlertStore } from "../stores/alert";
 import { storeToRefs } from "pinia";
-import { onMounted, onUpdated, ref } from "vue";
+import { onMounted, onUpdated, ref, onBeforeMount } from "vue";
 import { useRouter } from "vue-router";
 
 import cityInfo from "../components/CityInfo.vue";
@@ -30,7 +30,7 @@ const cURL = ref(""); //ref("https://cdn.quasar.dev/img/parallax1.jpg");
 const imgAttribution = ref("");
 
 const selectedCity = ref({});
-const cityGeoCoord = ref([]);
+const cityGeoCoord = ref({ data: [0, 0] });
 
 async function getCities() {
   // console.log(user.value.id);
@@ -60,12 +60,15 @@ function onClick(
   selectedCity.value.highlights = itemHighlights;
   selectedCity.value.geo = itemGeo;
 
-  if (!selectedCity.value.geo.features[0].geometry.coordinates) {
-    cityGeoCoord.value =
-      selectedCity.value.geo.features[0].geometry.coordinates;
-  } else cityGeoCoord.value = [29, 34];
-  console.log(selectedCity.value.geo.features[0].geometry.coordinates);
-  console.log(cityGeoCoord.value[0]);
+  //console.log(selectedCity.value.geo.features[0].geometry.coordinates);
+
+  if (selectedCity.value.geo.features[0].geometry.coordinates) {
+    cityGeoCoord.value.data = [
+      ...selectedCity.value.geo.features[0].geometry.coordinates,
+    ];
+  } else cityGeoCoord.value.data = [0, 0];
+
+  console.log(cityGeoCoord.value.data);
 }
 
 function onDelete() {
@@ -91,6 +94,10 @@ async function confirmUpdate() {
   await cityStore.editCity(itemID.value, vDate.value, cHighlights.value);
   getCities();
 }
+
+// onBeforeMount(() => {
+//   cityGeoCoord.value.data = [0, 0];
+// });
 
 onMounted(() => {
   getCities();
@@ -281,7 +288,7 @@ onUpdated(() => {
           <cityInfo :theCity="selectedCity"> </cityInfo>
         </div>
         <div class="city-map">
-          <Map :coordinates="cityGeoCoord.value" />
+          <Map :coordinates="cityGeoCoord.data" :key="cityGeoCoord.data" />
         </div>
       </div>
     </div>
