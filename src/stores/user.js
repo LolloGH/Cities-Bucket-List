@@ -61,8 +61,10 @@ export const useUserStore = defineStore("user", {
       if (error) {
         const alertStore = useAlertStore();
 
-        alertStore.error(error);
-        // alert(error.error_description || error.message);
+        alertStore.error(
+          error.message + ", please check your inbox and confirm"
+        );
+
         throw error;
       }
 

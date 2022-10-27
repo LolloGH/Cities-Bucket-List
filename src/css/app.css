@@ -12,3 +12,31 @@ body {
 .bg-Gunmetal-Gray {
   background: #738580 !important;
 }
+
+.text-Cool-Gray {
+  color: #474440 !important;
+}
+.bg-Cool-Gray {
+  background: #474440 !important;
+}
+
+.text-Scallop-Seashell {
+  color: #e7d2cc !important;
+}
+.bg-Scallop-Seashell {
+  background: #e7d2cc !important;
+}
+
+.text-Pewter {
+  color: #b9b7bd !important;
+}
+.bg-Pewter {
+  background: #b9b7bd !important;
+}
+
+.text-myRed {
+  color: #970c10 !important;
+}
+.bg-myRed {
+  background: #970c10 !important;
+}

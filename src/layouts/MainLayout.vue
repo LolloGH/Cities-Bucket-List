@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="hhh Lpr lFf">
+  <q-layout view="hHh Lpr lFf" class="shadow-2 rounded-borders">
     <q-header elevated class="bg-grey">
       <q-toolbar>
         <q-btn
@@ -34,7 +34,16 @@
       </q-toolbar>
     </q-header>
 
-    <q-drawer show-if-above v-model="leftDrawerOpen" bordered>
+    <q-drawer
+      :mini="miniState"
+      @mouseover="miniState = false"
+      @mouseout="miniState = true"
+      :width="320"
+      :breakpoint="500"
+      show-if-above
+      v-model="leftDrawerOpen"
+      bordered
+    >
       <q-list>
         <q-item-label header> Essential Links </q-item-label>
 
@@ -61,16 +70,20 @@
 </style>
 
 <script setup>
-import { defineComponent, ref, onMounted } from "vue";
+import { ref } from "vue";
 import EssentialLink from "components/EssentialLink.vue";
 import AuthButton from "src/components/AuthButton.vue";
 import { useRouter } from "vue-router";
+import { storeToRefs } from "pinia";
 
 import MyAlert from "../components/MyAlert.vue";
 import { useAlertStore } from "../stores/alert";
+import { useUserStore } from "../stores/user";
 
-const alertStore = useAlertStore();
+const userStore = useUserStore();
+const { user } = storeToRefs(userStore);
 
+const miniState = ref(true);
 const leftDrawerOpen = ref(false);
 const router = useRouter();
 const linksList = [
@@ -81,14 +94,14 @@ const linksList = [
     link: "/#/newCity",
   },
   {
-    title: "Github",
-    caption: "github.com/quasarframework",
-    icon: "code",
-    link: "https://github.com/quasarframework",
+    title: "My Cities",
+    caption: "Your current city list",
+    icon: "location_city",
+    link: "/#/myCities",
   },
   {
-    title: "Discord Chat Channel",
-    caption: "chat.quasar.dev",
+    title: "Contact Us",
+    caption: "Support & questions",
     icon: "chat",
     link: "https://chat.quasar.dev",
   },
@@ -97,10 +110,6 @@ const linksList = [
 const essentialLinks = linksList;
 
 function toggleLeftDrawer() {
-  leftDrawerOpen.value = !leftDrawerOpen.value;
+  if (!user) leftDrawerOpen.value = !leftDrawerOpen.value;
 }
-
-onMounted(() => {
-  toggleLeftDrawer();
-});
 </script>

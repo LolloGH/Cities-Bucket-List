@@ -3,7 +3,7 @@
     filled
     label="Enter or select a city"
     hint="So, where to exactly?"
-    :model="model"
+    :modelValue="model"
     @input="$emit('update:model', $event.target.value)"
     use-input
     use-chips
