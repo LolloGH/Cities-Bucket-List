@@ -1,5 +1,6 @@
 1. add email minimum lenght and other validation to form
 2. add user name and user profile to db
 3. make the city select a signle value one
+finalize insert city with check for existing city and add new fields to the table
 
 check quasar parallax and timeline
