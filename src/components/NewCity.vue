@@ -94,15 +94,28 @@ const date = ref("2022/12/01");
 // const name = ref(null);
 const cityName = ref(null);
 const text = ref("");
-
 const imageURL = ref("");
+const imgAttributionTag = ref("");
+
+const geoJson = ref(null);
+
+async function fetchGeoCode(city) {
+  const url = "https://nominatim.openstreetmap.org/search?city="
+    .concat(city)
+    .concat("&format=geojson");
+  const response = await fetch(url);
+  if (response.ok) {
+    geoJson.value = await response.json();
+    console.log(geoJson.value);
+  }
+}
 
 async function getImage(city) {
+  let imgAttribution;
   const result = await unsplash.search.getPhotos({
     query: city,
     page: 1,
     perPage: 1,
-
     orientation: "landscape",
   });
 
@@ -112,9 +125,19 @@ async function getImage(city) {
   } else {
     // handle success here
     const photo = result.response;
-    console.log(photo);
+    //console.log(photo);
     imageURL.value = photo.results[0].urls.regular.toString();
-    console.log(imageURL.value);
+    //console.log(imageURL.value);
+    imgAttribution = photo.results[0].user.links.html.concat(
+      `?utm_source=City_Bucket_List&utm_medium=referral" target="_blank">`
+    );
+    imgAttributionTag.value = `Photo by <a href="`
+      .concat(imgAttribution)
+      .concat(photo.results[0].user.name)
+      .concat(
+        `</a> on <a href="https://unsplash.com/?utm_source=City_Bucket_List&utm_medium=referral target="_blank"">Unsplash</a>`
+      );
+    //console.log(imgAttributionTag.value);
   }
 }
 
@@ -123,12 +146,15 @@ async function onSubmit() {
 
   await getImage(cityName.value[0]);
 
+  await fetchGeoCode(cityName.value[0]);
+
   console.log(
     cityName.value[0],
     text.value,
     date.value,
     user.value.id,
-    imageURL.value
+    imageURL.value,
+    imgAttributionTag.value
   );
 
   cityStore.insertCity(
@@ -136,7 +162,9 @@ async function onSubmit() {
     user.value.id,
     date.value,
     text.value,
-    imageURL.value
+    imageURL.value,
+    imgAttributionTag.value,
+    geoJson.value
   );
 
   router.push({ path: "/myCities" });
