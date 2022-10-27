@@ -6,7 +6,8 @@ import { storeToRefs } from "pinia";
 import { onMounted, onUpdated, ref } from "vue";
 import { useRouter } from "vue-router";
 
-import Map from "./MyMap.vue";
+import cityInfo from "../components/CityInfo.vue";
+import Map from "./VueMap.vue";
 
 const userStore = useUserStore();
 const cityStore = useCitiesStore();
@@ -26,18 +27,45 @@ const vDate = ref("");
 const cHighlights = ref("");
 const itemID = ref("");
 const cURL = ref(""); //ref("https://cdn.quasar.dev/img/parallax1.jpg");
+const imgAttribution = ref("");
+
+const selectedCity = ref({});
+const cityGeoCoord = ref([]);
 
 async function getCities() {
   // console.log(user.value.id);
   await cityStore.fetchCities();
 }
 
-function onClick(itemName, itemDate, itemHighlights, id, itemURL) {
+function showLink(city) {}
+
+function onClick(
+  itemName,
+  itemDate,
+  itemHighlights,
+  id,
+  itemURL,
+  itemAttribution,
+  itemGeo
+) {
   cName.value = itemName;
   vDate.value = itemDate;
   cHighlights.value = itemHighlights;
   itemID.value = id;
   cURL.value = itemURL;
+  imgAttribution.value = itemAttribution;
+
+  selectedCity.value.name = itemName;
+  selectedCity.value.visitDate = itemDate;
+  selectedCity.value.highlights = itemHighlights;
+  selectedCity.value.geo = itemGeo;
+
+  if (!selectedCity.value.geo.features[0].geometry.coordinates) {
+    cityGeoCoord.value =
+      selectedCity.value.geo.features[0].geometry.coordinates;
+  } else cityGeoCoord.value = [29, 34];
+  console.log(selectedCity.value.geo.features[0].geometry.coordinates);
+  console.log(cityGeoCoord.value[0]);
 }
 
 function onDelete() {
@@ -52,6 +80,7 @@ function onDelete() {
   cHighlights.value = "";
   itemID.value = "";
   cURL.value = "https://cdn.quasar.dev/img/parallax1.jpg";
+  imgAttribution.value = "";
 }
 
 function onUpdate(itemName, itemDate, itemHighlights, id) {
@@ -150,80 +179,113 @@ onUpdated(() => {
   </div>
 
   <!-- Main v-for to list all cities in table  -->
+  <div class="city-page-container">
+    <div>
+      <div v-for="city in cities" :key="city.id" class="q-pa-md">
+        <q-card class="my-card">
+          <div class="img-container">
+            <q-parallax
+              @click="
+                onClick(
+                  city.city_name,
+                  city.visit_date,
+                  city.city_highlights,
+                  city.id,
+                  city.image_URL,
+                  city.img_attribution_tag,
+                  city.city_geoCode
+                )
+              "
+              class="image cursor-pointer"
+              :src="
+                city.image_URL || 'https://cdn.quasar.dev/img/parallax1.jpg'
+              "
+              :height="200"
+            />
+            <div class="overlay" v-html="city.img_attribution_tag"></div>
+          </div>
 
-  <div v-for="city in cities" :key="city.id" class="q-pa-md">
-    <q-card class="my-card">
-      <q-parallax
-        :src="city.image_URL || 'https://cdn.quasar.dev/img/parallax1.jpg'"
-        :height="250"
-      />
-      <!-- <q-img
-        :src="city.image_URL || 'https://cdn.quasar.dev/img/parallax1.jpg'"
-      /> -->
+          <q-card-section>
+            <div class="text-h6">{{ city.city_name }}</div>
+            <div v-if="city.visit_date" class="text-subtitle2">
+              Wishing to visit on: {{ city.visit_date.slice(0, 10) }}
+            </div>
 
-      <q-card-section>
-        <div class="text-h6">{{ city.city_name }}</div>
-        <div v-if="city.visit_date" class="text-subtitle2">
-          Wishing to visit on: {{ city.visit_date.slice(0, 10) }}
-        </div>
+            <!-- Expandable plus button for city actions -->
 
-        <!-- Expandable plus button for city actions -->
+            <q-fab
+              class="exp-button"
+              push
+              icon="keyboard_arrow_right"
+              direction="right"
+              color="Gunmetal-Gray"
+              @click="
+                onClick(
+                  city.city_name,
+                  city.visit_date,
+                  city.city_highlights,
+                  city.id,
+                  city.image_URL,
+                  city.img_attribution_tag,
+                  city.city_geoCode
+                )
+              "
+            >
+              <q-fab-action
+                @click="
+                  onUpdate(
+                    city.city_name,
+                    city.visit_date,
+                    city.city_highlights,
+                    city.id
+                  )
+                "
+                color="Pewter"
+                icon="edit"
+              />
+              <q-fab-action
+                @click="confirm = true"
+                color="Pewter"
+                icon="delete"
+              />
+            </q-fab>
 
-        <q-fab
-          class="exp-button"
-          push
-          icon="keyboard_arrow_right"
-          direction="right"
-          color="Gunmetal-Gray"
-          @click="
-            onClick(
-              city.city_name,
-              city.visit_date,
-              city.city_highlights,
-              city.id,
-              city.image_URL
-            )
-          "
-        >
-          <q-fab-action
-            @click="
-              onUpdate(
-                city.city_name,
-                city.visit_date,
-                city.city_highlights,
-                city.id
-              )
-            "
-            color="Pewter"
-            icon="edit"
-          />
-          <q-fab-action @click="confirm = true" color="Pewter" icon="delete" />
-        </q-fab>
-
-        <!-- Expandable dropdown to show city highlights -->
-        <q-card-actions>
-          <q-space />
-          <q-btn
-            color="grey"
-            round
-            flat
-            dense
-            :icon="expanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down'"
-            @click="expanded = !expanded"
-          />
-        </q-card-actions>
-      </q-card-section>
-      <q-slide-transition>
-        <div v-show="expanded">
-          <q-separator />
-          <q-card-section class="text-subitle2">
-            {{ city.city_highlights }}
+            <!-- Expandable dropdown to show city highlights -->
+            <q-card-actions>
+              <!-- <q-space /> -->
+              <q-btn
+                color="grey"
+                round
+                flat
+                dense
+                :icon="expanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down'"
+                @click="expanded = !expanded"
+              />
+            </q-card-actions>
           </q-card-section>
+          <q-slide-transition>
+            <div v-show="expanded">
+              <q-separator />
+              <q-card-section class="text-subtitle2">
+                {{ city.city_highlights }}
+              </q-card-section>
+            </div>
+          </q-slide-transition>
+        </q-card>
+      </div>
+    </div>
+    <div class="q-pa-md" style="margin-top: 0px">
+      <div class="bg-Cool-Gray city-info-container">
+        <h4>City Info</h4>
+        <div class="city-info">
+          <cityInfo :theCity="selectedCity"> </cityInfo>
         </div>
-      </q-slide-transition>
-    </q-card>
+        <div class="city-map">
+          <Map :coordinates="cityGeoCoord.value" />
+        </div>
+      </div>
+    </div>
   </div>
-
   <!-- Plus button to add new city -->
 
   <q-page-sticky position="bottom-right" :offset="[18, 18]">
@@ -234,18 +296,90 @@ onUpdated(() => {
       @click="router.push({ path: '/newCity' })"
     />
   </q-page-sticky>
-  <!-- <Map /> -->
 </template>
 
-<style lang="sass" scoped>
-.my-card
-  width: 100%
-  max-width: 500px
-  position: relative
+<style scoped>
+.my-card {
+  width: 100%;
 
+  position: relative;
+}
 
-.exp-button
-  position: absolute
-  right: 15px
-  bottom: 65px
+.exp-button {
+  position: absolute;
+  right: 15px;
+  bottom: 65px;
+}
+.city-page-container {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  width: 100%;
+}
+
+.city-info-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 5px;
+  height: 85vh;
+  padding: 10px;
+  width: 100%;
+  position: fixed;
+  bottom: 30px;
+  top: 130px;
+  right: 10px;
+  width: 55vw;
+  border-radius: 5px;
+  background-color: Cool-Gray;
+}
+
+.city-info {
+  width: 100%;
+  height: 50%;
+  background-color: #eeede7;
+  padding: 0px 5px 5px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+.city-map {
+  width: 100%;
+  height: 50%;
+}
+
+h4 {
+  margin-top: 0px;
+  margin-bottom: 5px;
+  padding-bottom: 5px;
+
+  border-radius: 5px;
+  color: #eeede7;
+  text-align: center;
+}
+
+.img-container {
+  position: relative;
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.overlay {
+  position: absolute;
+  bottom: 0;
+  background: rgb(0, 0, 0);
+  background: rgba(0, 0, 0, 0.5);
+  color: #f1f1f1;
+  width: 100%;
+  transition: 0.7s ease;
+  opacity: 0;
+  color: white;
+  font-size: 14px;
+  padding: 5px 20px 5px 5px;
+  text-align: right;
+}
+.img-container:hover .overlay {
+  opacity: 1;
+}
 </style>
