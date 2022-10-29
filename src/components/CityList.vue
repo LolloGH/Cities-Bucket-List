@@ -3,7 +3,7 @@ import { useCitiesStore } from "../stores/cities";
 import { useUserStore } from "../stores/user";
 import { useAlertStore } from "../stores/alert";
 import { storeToRefs } from "pinia";
-import { onMounted, onUpdated, ref, onBeforeMount } from "vue";
+import { onMounted, onUpdated, ref, reactive, onBeforeMount } from "vue";
 import { useRouter } from "vue-router";
 
 import cityInfo from "../components/CityInfo.vue";
@@ -30,7 +30,9 @@ const cURL = ref(""); //ref("https://cdn.quasar.dev/img/parallax1.jpg");
 const imgAttribution = ref("");
 
 const selectedCity = ref({});
-const cityGeoCoord = ref({ data: [0, 0] });
+
+const cityGeoCoord = reactive({ data: [] });
+//const cityGeoCoord = reactive({ data: {} });
 
 async function getCities() {
   // console.log(user.value.id);
@@ -60,15 +62,19 @@ function onClick(
   selectedCity.value.highlights = itemHighlights;
   selectedCity.value.geo = itemGeo;
 
-  //console.log(selectedCity.value.geo.features[0].geometry.coordinates);
-
   if (selectedCity.value.geo.features[0].geometry.coordinates) {
-    cityGeoCoord.value.data = [
+    cityGeoCoord.data = [
       ...selectedCity.value.geo.features[0].geometry.coordinates,
     ];
-  } else cityGeoCoord.value.data = [0, 0];
+  } else cityGeoCoord.data = [0, 0];
 
-  console.log(cityGeoCoord.value.data);
+  /*
+  if (selectedCity.value.geo.features[0].geometry.coordinates) {
+
+    cityGeoCoord.data = JSON.parse(JSON.stringify(selectedCity.value.geo));
+  } else cityGeoCoord.data = {};
+*/
+  console.log(cityGeoCoord.data);
 }
 
 function onDelete() {
@@ -187,8 +193,13 @@ onUpdated(() => {
 
   <!-- Main v-for to list all cities in table  -->
   <div class="city-page-container">
-    <div>
-      <div v-for="city in cities" :key="city.id" class="q-pa-md">
+    <div class="city-container">
+      <div
+        v-for="city in cities"
+        :key="city.id"
+        class="q-pa-md"
+        style="padding: 8px 4px"
+      >
         <q-card class="my-card">
           <div class="img-container">
             <q-parallax
@@ -283,12 +294,12 @@ onUpdated(() => {
     </div>
     <div class="q-pa-md" style="margin-top: 0px">
       <div class="bg-Cool-Gray city-info-container">
-        <h4>City Info</h4>
+        <h6>City Info</h6>
         <div class="city-info">
           <cityInfo :theCity="selectedCity"> </cityInfo>
         </div>
         <div class="city-map">
-          <Map :coordinates="cityGeoCoord.data" :key="cityGeoCoord.data" />
+          <Map :coordinates="cityGeoCoord.data"></Map>
         </div>
       </div>
     </div>
@@ -308,8 +319,12 @@ onUpdated(() => {
 <style scoped>
 .my-card {
   width: 100%;
-
+  height: 30%;
   position: relative;
+}
+
+.city-container {
+  height: 80vh;
 }
 
 .exp-button {
@@ -321,27 +336,28 @@ onUpdated(() => {
   display: grid;
   grid-template-columns: 1fr 1.5fr;
   width: 100%;
+  margin-left: 60px;
 }
 
 .city-info-container {
   display: flex;
   flex-direction: column;
   margin-top: 5px;
-  height: 85vh;
+  height: 76vh;
   padding: 10px;
   width: 100%;
   position: fixed;
   bottom: 30px;
-  top: 130px;
+  top: 19.5vh;
   right: 10px;
-  width: 55vw;
+  width: 52vw;
   border-radius: 5px;
   background-color: Cool-Gray;
 }
 
 .city-info {
   width: 100%;
-  height: 50%;
+  height: 35%;
   background-color: #eeede7;
   padding: 0px 5px 5px;
   margin-bottom: 10px;
@@ -349,12 +365,12 @@ onUpdated(() => {
 }
 .city-map {
   width: 100%;
-  height: 50%;
+  height: 65%;
 }
 
-h4 {
-  margin-top: 0px;
-  margin-bottom: 5px;
+h6 {
+  margin-top: -6px;
+  margin-bottom: 2px;
   padding-bottom: 5px;
 
   border-radius: 5px;

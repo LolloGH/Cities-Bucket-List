@@ -35,6 +35,7 @@
     </q-header>
 
     <q-drawer
+      :overlay="true"
       :mini="miniState"
       @mouseover="miniState = false"
       @mouseout="miniState = true"
