@@ -53,7 +53,6 @@ function onClick(
   itemID.value = id;
   cURL.value = itemURL;
   imgAttribution.value = itemAttribution;
-
   selectedCity.value.name = itemName;
   selectedCity.value.visitDate = itemDate;
   selectedCity.value.highlights = itemHighlights;
@@ -71,7 +70,7 @@ function onClick(
     cityGeoCoord.data = JSON.parse(JSON.stringify(selectedCity.value.geo));
   } else cityGeoCoord.data = {};
 */
-  console.log(cityGeoCoord.data);
+  // console.log(cityGeoCoord.data);
 }
 
 function onDelete() {
@@ -293,7 +292,8 @@ onUpdated(() => {
       <div class="bg-Cool-Gray city-info-container">
         <h6>City Info</h6>
         <div class="city-info">
-          <cityInfo :theCity="selectedCity"> </cityInfo>
+          <cityInfo :theCity="selectedCity" :coordinates="cityGeoCoord.data">
+          </cityInfo>
         </div>
         <div class="city-map">
           <Map :coordinates="cityGeoCoord.data"></Map>

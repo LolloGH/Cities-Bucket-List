@@ -6,6 +6,7 @@ export const useCitiesStore = defineStore({
   id: "cities",
   state: () => ({
     cities: null,
+    myLocation: [],
   }),
 
   actions: {
@@ -49,6 +50,23 @@ export const useCitiesStore = defineStore({
       if (!data.value) {
         this.cities = [...data];
       }
+    },
+
+    getLocation() {
+      const coords = [];
+      navigator.geolocation.getCurrentPosition((success, error) => {
+        if (error) {
+          console.log(`Error: ${error}`);
+          return [0, 0];
+        } else {
+          coords[0] = success.coords.longitude;
+          coords[1] = success.coords.latitude;
+
+          for (let i = 0; i < coords.length; i++) {
+            this.myLocation.unshift(coords[i]);
+          }
+        }
+      });
     },
   },
 });

@@ -81,6 +81,16 @@ import MyAlert from "../components/MyAlert.vue";
 import { useAlertStore } from "../stores/alert";
 import { useUserStore } from "../stores/user";
 
+import { useCitiesStore } from "../stores/cities";
+
+const cityStore = useCitiesStore();
+const { myLocation } = storeToRefs(cityStore);
+locateMe();
+
+function locateMe() {
+  cityStore.getLocation();
+}
+
 const userStore = useUserStore();
 const { user } = storeToRefs(userStore);
 
