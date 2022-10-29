@@ -68,8 +68,10 @@ watch(
     console.log(`Now flying to: ${newVal}`);
     if (cityMarker) map.removeLayer(cityMarker);
     if (pathOne) map.removeLayer(pathOne);
-    map.flyTo([newVal[1], newVal[0]], 5);
-    cityMarker = L.marker([newVal[1], newVal[0]]).addTo(map);
+    map.flyTo([newVal[1], newVal[0]], 3);
+    cityMarker = L.marker([newVal[1], newVal[0]], {
+      title: "My dream city",
+    }).addTo(map);
 
     //use a mix of renderers
     customPane = map.createPane("customPane");
@@ -84,9 +86,18 @@ watch(
     // L.marker([10, -25]).addTo(map);
     // L.marker([0, 0]).addTo(map);
 
-    pathOne = L.curve(["M", myLocation, "Q", [52, 20], [49, 25]], {
-      renderer: canvasRenderer,
-    }).addTo(map);
+    pathOne = L.curve(
+      [
+        "M",
+        myLocation,
+        "Q",
+        [newVal[1] + 5, newVal[0] + 5],
+        [newVal[1], newVal[0]],
+      ],
+      {
+        renderer: canvasRenderer,
+      }
+    ).addTo(map);
 
     //pathOne = L.curve(["M", myLocation, "Q", myLocation, newVal], {
     //  color: "red",

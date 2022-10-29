@@ -32,14 +32,11 @@ const imgAttribution = ref("");
 const selectedCity = ref({});
 
 const cityGeoCoord = reactive({ data: [] });
-//const cityGeoCoord = reactive({ data: {} });
 
 async function getCities() {
   // console.log(user.value.id);
   await cityStore.fetchCities();
 }
-
-function showLink(city) {}
 
 function onClick(
   itemName,
@@ -336,7 +333,7 @@ onUpdated(() => {
   display: grid;
   grid-template-columns: 1fr 1.5fr;
   width: 100%;
-  margin-left: 60px;
+  margin-left: 5px;
 }
 
 .city-info-container {
@@ -392,7 +389,7 @@ h6 {
   position: absolute;
   bottom: 0;
   background: rgb(0, 0, 0);
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.8);
   color: #f1f1f1;
   width: 100%;
   transition: 0.7s ease;
