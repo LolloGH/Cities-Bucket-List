@@ -86,6 +86,8 @@ function onDelete() {
   itemID.value = "";
   cURL.value = "https://cdn.quasar.dev/img/parallax1.jpg";
   imgAttribution.value = "";
+
+  getCities();
 }
 
 function onUpdate(itemName, itemDate, itemHighlights, id) {
@@ -188,106 +190,110 @@ onUpdated(() => {
   </div>
 
   <!-- Main v-for to list all cities in table  -->
+
   <div class="city-page-container">
     <div class="city-container">
-      <div
-        v-for="city in cities"
-        :key="city.id"
-        class="q-pa-md"
-        style="padding: 8px 4px"
-      >
-        <q-card class="my-card">
-          <div class="img-container">
-            <q-parallax
-              @click="
-                onClick(
-                  city.city_name,
-                  city.visit_date,
-                  city.city_highlights,
-                  city.id,
-                  city.image_URL,
-                  city.img_attribution_tag,
-                  city.city_geoCode
-                )
-              "
-              class="image cursor-pointer"
-              :src="
-                city.image_URL || 'https://cdn.quasar.dev/img/parallax1.jpg'
-              "
-              :height="200"
-            />
-            <div class="overlay" v-html="city.img_attribution_tag"></div>
-          </div>
-
-          <q-card-section>
-            <div class="text-h6">{{ city.city_name }}</div>
-            <div v-if="city.visit_date" class="text-subtitle2">
-              Wishing to visit on: {{ city.visit_date.slice(0, 10) }}
-            </div>
-
-            <!-- Expandable plus button for city actions -->
-
-            <q-fab
-              class="exp-button"
-              push
-              icon="keyboard_arrow_right"
-              direction="right"
-              color="Gunmetal-Gray"
-              @click="
-                onClick(
-                  city.city_name,
-                  city.visit_date,
-                  city.city_highlights,
-                  city.id,
-                  city.image_URL,
-                  city.img_attribution_tag,
-                  city.city_geoCode
-                )
-              "
-            >
-              <q-fab-action
+      <TransitionGroup name="fade">
+        <div
+          v-for="city in cities"
+          :key="city.id"
+          class="q-pa-md"
+          style="padding: 8px 4px"
+        >
+          <q-card class="my-card">
+            <div class="img-container">
+              <q-parallax
                 @click="
-                  onUpdate(
+                  onClick(
                     city.city_name,
                     city.visit_date,
                     city.city_highlights,
-                    city.id
+                    city.id,
+                    city.image_URL,
+                    city.img_attribution_tag,
+                    city.city_geoCode
                   )
                 "
-                color="Pewter"
-                icon="edit"
+                class="image cursor-pointer"
+                :src="
+                  city.image_URL || 'https://cdn.quasar.dev/img/parallax1.jpg'
+                "
+                :height="200"
               />
-              <q-fab-action
-                @click="confirm = true"
-                color="Pewter"
-                icon="delete"
-              />
-            </q-fab>
-
-            <!-- Expandable dropdown to show city highlights -->
-            <q-card-actions>
-              <!-- <q-space /> -->
-              <q-btn
-                color="grey"
-                round
-                flat
-                dense
-                :icon="expanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down'"
-                @click="expanded = !expanded"
-              />
-            </q-card-actions>
-          </q-card-section>
-          <q-slide-transition>
-            <div v-show="expanded">
-              <q-separator />
-              <q-card-section class="text-subtitle2">
-                {{ city.city_highlights }}
-              </q-card-section>
+              <div class="overlay" v-html="city.img_attribution_tag"></div>
             </div>
-          </q-slide-transition>
-        </q-card>
-      </div>
+
+            <q-card-section>
+              <div class="text-h6">{{ city.city_name }}</div>
+              <div v-if="city.visit_date" class="text-subtitle2">
+                Wishing to visit on: {{ city.visit_date.slice(0, 10) }}
+              </div>
+
+              <!-- Expandable plus button for city actions -->
+
+              <q-fab
+                class="exp-button"
+                push
+                icon="keyboard_arrow_right"
+                direction="right"
+                color="Gunmetal-Gray"
+                @click="
+                  onClick(
+                    city.city_name,
+                    city.visit_date,
+                    city.city_highlights,
+                    city.id,
+                    city.image_URL,
+                    city.img_attribution_tag,
+                    city.city_geoCode
+                  )
+                "
+              >
+                <q-fab-action
+                  @click="
+                    onUpdate(
+                      city.city_name,
+                      city.visit_date,
+                      city.city_highlights,
+                      city.id
+                    )
+                  "
+                  color="Pewter"
+                  icon="edit"
+                />
+                <q-fab-action
+                  @click="confirm = true"
+                  color="Pewter"
+                  icon="delete"
+                />
+              </q-fab>
+
+              <!-- Expandable dropdown to show city highlights -->
+              <q-card-actions>
+                <!-- <q-space /> -->
+                <q-btn
+                  color="grey"
+                  round
+                  flat
+                  dense
+                  :icon="expanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down'"
+                  @click="expanded = !expanded"
+                />
+              </q-card-actions>
+            </q-card-section>
+            <q-slide-transition>
+              <div v-show="expanded">
+                <q-separator />
+                <q-card-section class="text-subtitle2">
+                  {{ city.city_highlights }}
+                </q-card-section>
+              </div>
+            </q-slide-transition>
+          </q-card>
+        </div>
+      </TransitionGroup>
     </div>
+
     <div class="q-pa-md" style="margin-top: 0px">
       <div class="bg-Cool-Gray city-info-container">
         <h6>City Info</h6>
@@ -401,5 +407,25 @@ h6 {
 }
 .img-container:hover .overlay {
   opacity: 1;
+}
+
+/* 1. declare transition */
+.fade-move,
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
+}
+
+/* 2. declare enter from and leave to state */
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+  transform: scaleY(0.01) translate(30px, 0);
+}
+
+/* 3. ensure leaving items are taken out of layout flow so that moving
+      animations can be calculated correctly. */
+.fade-leave-active {
+  position: absolute;
 }
 </style>
