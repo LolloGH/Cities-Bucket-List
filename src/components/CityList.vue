@@ -94,6 +94,12 @@ function onUpdate(itemName, itemDate, itemHighlights, id) {
   prompt.value = true;
 }
 
+async function toggleVisited(id, visited) {
+  getCities();
+  await cityStore.markVisitedUnvisited(id, visited);
+  getCities();
+}
+
 async function confirmUpdate() {
   await cityStore.editCity(itemID.value, vDate.value, cHighlights.value);
   getCities();
@@ -220,17 +226,7 @@ onUpdated(() => {
                 "
                 :height="200"
               />
-              <div class="overlay" v-html="city.img_attribution_tag"></div>
-            </div>
-
-            <q-card-section>
-              <div class="text-h6">{{ city.city_name }}</div>
-              <div v-if="city.visit_date" class="text-subtitle2">
-                Wishing to visit on: {{ city.visit_date.slice(0, 10) }}
-              </div>
-
               <!-- Expandable plus button for city actions -->
-
               <q-fab
                 class="exp-button"
                 push
@@ -267,10 +263,28 @@ onUpdated(() => {
                   icon="delete"
                 />
               </q-fab>
+              <div class="overlay" v-html="city.img_attribution_tag"></div>
+            </div>
 
-              <!-- Expandable dropdown to show city highlights -->
-              <q-card-actions>
-                <!-- <q-space /> -->
+            <q-card-section>
+              <div class="text-h6 spaced-items">
+                {{ city.city_name }}
+
+                <q-checkbox
+                  v-model="city.is_visited"
+                  checked-icon="beenhere"
+                  unchecked-icon="incomplete_circle"
+                  indeterminate-icon="help"
+                  label="Been there?"
+                  left-label
+                  @click="toggleVisited(city.id, city.is_visited)"
+                  id="check"
+                />
+              </div>
+              <div v-if="city.visit_date" class="text-subtitle2 spaced-items">
+                Wishing to visit on: {{ city.visit_date.slice(0, 10) }}
+                <!-- Expandable dropdown to show city highlights -->
+
                 <q-btn
                   color="grey"
                   round
@@ -279,7 +293,7 @@ onUpdated(() => {
                   :icon="expanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down'"
                   @click="expanded = !expanded"
                 />
-              </q-card-actions>
+              </div>
             </q-card-section>
             <q-slide-transition>
               <div v-show="expanded">
@@ -320,6 +334,12 @@ onUpdated(() => {
 </template>
 
 <style scoped>
+.spaced-items {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
 .my-card {
   width: 100%;
   height: 30%;
@@ -379,6 +399,10 @@ h6 {
   border-radius: 5px;
   color: #eeede7;
   text-align: center;
+}
+
+#check {
+  font-size: small;
 }
 
 .img-container {

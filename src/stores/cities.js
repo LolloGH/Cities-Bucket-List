@@ -44,6 +44,18 @@ export const useCitiesStore = defineStore({
       if (error) throw error;
     },
 
+    async markVisitedUnvisited(cityID, visited) {
+      console.log(cityID, visited);
+      const { data, error } = await supabase
+        .from("cities")
+        .update({ is_visited: visited })
+        .match({ id: cityID });
+
+      if (error) throw error;
+
+      console.log(data[0].is_visited);
+    },
+
     async fetchCities() {
       const { data, error } = await supabase.from("cities").select();
 
