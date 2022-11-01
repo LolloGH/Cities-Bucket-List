@@ -5,9 +5,15 @@ import { useAlertStore } from "../stores/alert";
 import { storeToRefs } from "pinia";
 import { onMounted, onUpdated, ref, reactive, onBeforeMount } from "vue";
 import { useRouter } from "vue-router";
+import { useQuasar } from "quasar";
 
 import cityInfo from "../components/CityInfo.vue";
+import cityInfoModal from "../components/CityInfoModal.vue";
 import Map from "./VueMap.vue";
+
+const $q = useQuasar();
+
+const showCard = ref(false);
 
 const userStore = useUserStore();
 const cityStore = useCitiesStore();
@@ -38,6 +44,8 @@ async function getCities() {
   await cityStore.fetchCities();
 }
 
+console.log($q.platform.is);
+
 function onClick(
   itemName,
   itemDate,
@@ -64,13 +72,10 @@ function onClick(
     ];
   } else cityGeoCoord.data = [0, 0];
 
-  /*
-  if (selectedCity.value.geo.features[0].geometry.coordinates) {
-
-    cityGeoCoord.data = JSON.parse(JSON.stringify(selectedCity.value.geo));
-  } else cityGeoCoord.data = {};
-*/
-  // console.log(cityGeoCoord.data);
+  showCard.value = true;
+  console.log(
+    `Showcard is ${showCard.value} and platform is ${$q.platform.is.mobile}`
+  );
 }
 
 function onDelete() {
@@ -308,7 +313,7 @@ onUpdated(() => {
       </TransitionGroup>
     </div>
 
-    <div class="q-pa-md" style="margin-top: 0px">
+    <div v-if="$q.platform.is.desktop" class="q-pa-md" style="margin-top: 0px">
       <div class="bg-Cool-Gray city-info-container">
         <h6>City Info</h6>
         <div class="city-info">
@@ -320,6 +325,43 @@ onUpdated(() => {
         </div>
       </div>
     </div>
+    <div v-else>
+      <q-dialog maximized v-model="showCard">
+        <div class="city-modal lt-xs">
+          <q-card class="my-card bg-Pewter">
+            <q-card-actions align="right">
+              <q-btn v-close-popup flat color="primary" icon="close" />
+            </q-card-actions>
+
+            <q-card-section>
+              <div class="q-pa-xs" style="margin-top: 0px">
+                <div class="bg-Cool-Gray city-info-container">
+                  <h6>City Info</h6>
+                  <div class="city-info">
+                    <cityInfo
+                      :theCity="selectedCity"
+                      :coordinates="cityGeoCoord.data"
+                    >
+                    </cityInfo>
+                  </div>
+
+                  <div class="city-map">
+                    <Map :coordinates="cityGeoCoord.data"></Map>
+                  </div>
+                </div>
+              </div>
+            </q-card-section>
+
+            <q-card-section> </q-card-section>
+          </q-card>
+        </div>
+      </q-dialog>
+    </div>
+    <!-- <cityInfoModal
+        class="lt-xs"
+        v-if="$q.platform.is.mobile && showCard"
+        v-model="showCard"
+      ></cityInfoModal> -->
   </div>
   <!-- Plus button to add new city -->
 
@@ -342,7 +384,7 @@ onUpdated(() => {
 }
 .my-card {
   width: 100%;
-  height: 30%;
+  height: 100%;
   position: relative;
 }
 
@@ -357,23 +399,21 @@ onUpdated(() => {
 }
 .city-page-container {
   display: grid;
-  grid-template-columns: 1fr 1.5fr;
+  grid-template-columns: 1fr;
   width: 100%;
   margin-left: 5px;
+  margin-right: 5px;
 }
 
 .city-info-container {
   display: flex;
   flex-direction: column;
   margin-top: 5px;
-  height: 76vh;
-  padding: 10px;
+  margin-bottom: 5px;
+  height: 85vh;
+  padding: 5px;
   width: 100%;
-  position: fixed;
-  bottom: 30px;
-  top: 19.5vh;
-  right: 10px;
-  width: 52vw;
+
   border-radius: 5px;
   background-color: Cool-Gray;
 }
@@ -387,7 +427,7 @@ onUpdated(() => {
   border-radius: 5px;
 }
 .city-map {
-  width: 100%;
+  width: 70vw;
   height: 65%;
 }
 
@@ -451,5 +491,39 @@ h6 {
       animations can be calculated correctly. */
 .fade-leave-active {
   position: absolute;
+}
+
+/* When the browser is at least 600px and above */
+@media screen and (min-width: 600px) {
+  .city-page-container {
+    grid-template-columns: 1fr 1.5fr;
+  }
+
+  .my-card {
+    width: 100%;
+    height: 30%;
+    position: relative;
+  }
+
+  .city-info-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 5px;
+    height: 76vh;
+    padding: 10px;
+    width: 100%;
+    position: fixed;
+    bottom: 30px;
+    top: 19.5vh;
+    right: 10px;
+    width: 52vw;
+    border-radius: 5px;
+    background-color: Cool-Gray;
+  }
+
+  .city-map {
+    width: 100%;
+    height: 65%;
+  }
 }
 </style>
