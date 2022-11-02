@@ -10,6 +10,7 @@ import { useQuasar } from "quasar";
 import cityInfo from "../components/CityInfo.vue";
 import cityInfoModal from "../components/CityInfoModal.vue";
 import Map from "./VueMap.vue";
+import MapModal from "./VueMapModal.vue";
 
 const $q = useQuasar();
 
@@ -345,8 +346,8 @@ onUpdated(() => {
                     </cityInfo>
                   </div>
 
-                  <div class="city-map">
-                    <Map :coordinates="cityGeoCoord.data"></Map>
+                  <div>
+                    <MapModal :coordinates="cityGeoCoord.data"></MapModal>
                   </div>
                 </div>
               </div>

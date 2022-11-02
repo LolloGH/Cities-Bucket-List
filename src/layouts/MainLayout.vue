@@ -29,8 +29,8 @@
           M<span class="redLetter">y</span> Citi<span class="redLetter">e</span
           >s <strong>Bucket</strong> Li<span class="redLetter">s</span>t
         </q-toolbar-title>
-        <q-btn to="/myCities" outline style="color: #738580" label="MyCities" />
-        <q-btn to="/citySearch" outline style="color: #738580" label="Search" />
+        <!-- <q-btn to="/myCities" outline style="color: #738580" label="MyCities" />
+        <q-btn to="/citySearch" outline style="color: #738580" label="Search" /> -->
       </q-toolbar>
     </q-header>
 
@@ -114,7 +114,7 @@ const linksList = [
     title: "Contact Us",
     caption: "Support & questions",
     icon: "chat",
-    link: "https://chat.quasar.dev",
+    link: "mailto: lorenzocorio@duck.com",
   },
 ];
 
