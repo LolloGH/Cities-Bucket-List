@@ -6,3 +6,6 @@ finalize insert city with check for existing city and add new fields to the tabl
 5. change alert type once city is deleted to have one that disappears without clicking
 
 check quasar parallax and timeline
+
+
+markers not visible in deploy

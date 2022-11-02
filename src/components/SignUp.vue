@@ -69,7 +69,7 @@
       <q-space></q-space>
       <div class="login-link">
         Already have an account?&nbsp;&nbsp;
-        <a href="/signin"> Sign In</a>
+        <a href="/#/signin"> Sign In</a>
       </div>
     </div>
   </div>
