@@ -1,9 +1,12 @@
 <template>
-  <div class="input-city">
-    <div class="text-h5 center">
+  <div class="input-city" style="max-width: 500px; width: 80vw">
+    <div
+      class="text-h5 center"
+      style="max-width: 500px; width: 80vw; text-align: center"
+    >
       Hey buddy, welcome back! <br />Where are we going next?
     </div>
-    <div class="q-pa-md" style="max-width: 500px; width: 60vw">
+    <div class="q-pt-md" style="width: 70%">
       <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
         <CitySearch v-model="cityName" />
 
@@ -58,7 +61,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 50px 350px;
+  margin: 50px auto;
 }
 
 .form-buttons {

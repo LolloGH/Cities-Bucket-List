@@ -39,7 +39,7 @@
       :mini="miniState"
       @mouseover="miniState = false"
       @mouseout="miniState = true"
-      :width="320"
+      :width="270"
       :breakpoint="500"
       show-if-above
       v-model="leftDrawerOpen"
@@ -100,7 +100,7 @@ const router = useRouter();
 const linksList = [
   {
     title: "New Destination",
-    caption: "Add a new city to your bucket list",
+    caption: "Add a city to your bucket list",
     icon: "trolley",
     link: "/#/newCity",
   },

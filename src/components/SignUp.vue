@@ -1,6 +1,6 @@
 <template>
   <div class="sign-up">
-    <div class="q-pa-md" style="max-width: 500px; width: 30vw">
+    <div class="q-pa-md" style="max-width: 500px; width: 70vw">
       <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
         <!-- <q-input
           filled
@@ -80,7 +80,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 100px 350px;
+  margin: 100px auto;
 }
 
 .form-buttons {

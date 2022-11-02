@@ -54,7 +54,8 @@ function onClick(
   id,
   itemURL,
   itemAttribution,
-  itemGeo
+  itemGeo,
+  fireModal
 ) {
   cName.value = itemName;
   vDate.value = itemDate;
@@ -73,7 +74,8 @@ function onClick(
     ];
   } else cityGeoCoord.data = [0, 0];
 
-  showCard.value = true;
+  if (fireModal) showCard.value = true;
+
   console.log(
     `Showcard is ${showCard.value} and platform is ${$q.platform.is.mobile}`
   );
@@ -215,18 +217,7 @@ onUpdated(() => {
           <q-card class="my-card">
             <div class="img-container">
               <q-parallax
-                @click="
-                  onClick(
-                    city.city_name,
-                    city.visit_date,
-                    city.city_highlights,
-                    city.id,
-                    city.image_URL,
-                    city.img_attribution_tag,
-                    city.city_geoCode
-                  )
-                "
-                class="image cursor-pointer"
+                class="image"
                 :src="
                   city.image_URL || 'https://cdn.quasar.dev/img/parallax1.jpg'
                 "
@@ -237,7 +228,7 @@ onUpdated(() => {
                 class="exp-button"
                 push
                 icon="keyboard_arrow_right"
-                direction="right"
+                direction="down"
                 color="Gunmetal-Gray"
                 @click="
                   onClick(
@@ -247,7 +238,8 @@ onUpdated(() => {
                     city.id,
                     city.image_URL,
                     city.img_attribution_tag,
-                    city.city_geoCode
+                    city.city_geoCode,
+                    false
                   )
                 "
               >
@@ -270,6 +262,21 @@ onUpdated(() => {
                 />
               </q-fab>
               <div class="overlay" v-html="city.img_attribution_tag"></div>
+              <div
+                class="overlay-click cursor-pointer"
+                @click="
+                  onClick(
+                    city.city_name,
+                    city.visit_date,
+                    city.city_highlights,
+                    city.id,
+                    city.image_URL,
+                    city.img_attribution_tag,
+                    city.city_geoCode,
+                    true
+                  )
+                "
+              ></div>
             </div>
 
             <q-card-section>
@@ -472,6 +479,22 @@ h6 {
 }
 .img-container:hover .overlay {
   opacity: 1;
+}
+
+.overlay-click {
+  position: absolute;
+  top: 0;
+  background: rgb(0, 0, 0);
+  background: rgba(0, 0, 0, 0.8);
+  color: #f1f1f1;
+  width: 82%;
+  height: 85%;
+  transition: 0.7s ease;
+  opacity: 0;
+  color: white;
+  font-size: 14px;
+  padding: 5px 20px 5px 5px;
+  text-align: right;
 }
 
 /* 1. declare transition */

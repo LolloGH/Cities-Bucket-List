@@ -56,7 +56,7 @@ async function signIn() {
 
 <template>
   <div class="sign-up">
-    <div class="q-pa-md" style="max-width: 500px; width: 30vw">
+    <div class="q-pt-md" style="max-width: 500px; width: 70vw">
       <q-form @submit="signIn" @reset="onReset" class="q-gutter-md">
         <q-input standout v-model="email" filled type="email" hint="Email">
           <template v-slot:prepend>
@@ -99,7 +99,7 @@ async function signIn() {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 100px 350px;
+  margin: 100px auto;
 }
 
 .form-buttons {
