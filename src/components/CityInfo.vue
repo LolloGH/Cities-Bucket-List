@@ -4,7 +4,7 @@
       <div class="title">
         {{ theCity.geo?.features[0].properties.display_name }}
       </div>
-      <div class="story">
+      <div class="story text-center">
         <br />
         You are {{ distance }}Km and {{ difference }} days away from your dream
         destination!

@@ -339,11 +339,11 @@ onUpdated(() => {
                 <div class="bg-Cool-Gray city-info-container">
                   <h6>City Info</h6>
                   <div class="city-info">
-                    <cityInfo
+                    <cityInfoModal
                       :theCity="selectedCity"
                       :coordinates="cityGeoCoord.data"
                     >
-                    </cityInfo>
+                    </cityInfoModal>
                   </div>
 
                   <div>
