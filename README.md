@@ -5,12 +5,17 @@ The app has been developed using Vue.js (Composition API). The back-end makes us
 
 This is my first project developing a front-end web app using Vue.js and Quasar App as the CSS framework. The project also calls the Unsplsh API to retrieve live images of the cities inserted in the list and Leaflet Maps (Openstreet maps) to display a map.
 
+## Description
+
+The app provides a sign up/sign screen that will be displayed when the user is not logged in. The signup form requests an email address, password and password confirmation from the user. After successful logging in, the user is shown the main app content, being it a list of cities already inserted, a countdow to the selected date to visit the city, if any and the distance to that city from the user's current location (using Geolocation). A Leaflet map is also used to present a map with some info to the user.
+The app fetches all cities from the logged-in user’s list stored in Supabase, displaying am image of the selected city (from Unsplash API) and most relevant info directly on a card. An expandable dropdown would show additional information (notes that the user has about that city).
+
 ## Tech Stack
 
-- *Client* : Vue.js, Vite (dev server)
-- *Router* : Vue Router
-- *Store* : Pinia and Pinia Persist for persistent login
-- *Database as a service* : Supabase
+- **Client** : Vue.js, Vite (dev server)
+- **Router** : Vue Router
+- **Store** : Pinia and Pinia Persist for persistent login
+- **Database as a service** : Supabase
 
 ## Vue Modules
 
@@ -22,11 +27,6 @@ Used to quickly route to different components, as the Auth or the Main Dashboard
 
 Three stores are currently used by the project: a USER store to tore user authentication, a CITIES store to store city data and an ALERT store to handle notifications adn pop up alerts.
 
-## Description
-
-The app provides a sign up/sign screen that will be displayed when the user is not logged in. The signup form requests an email address, password and password confirmation from the user. After successful logging in, the user is shown the main app content, being it a list of cities already inserted, a countdow to the selected date to visit the city, if any and the distance to that city from the user's current location (using Geolocation). A Leaflet map is also used to present a map with some info to the user.
-The app fetches all cities from the logged-in user’s list stored in Supabase, displaying am image of the selected city (from Unsplash API) and most relevant info directly on a card. An expandable dropdown would show additional information (notes that the user has about that city).
-
 ## Technical Information
 
 * All of the CRUD actions are implemented (Create, Read, Update, Delete) for a city.
@@ -36,10 +36,8 @@ The app fetches all cities from the logged-in user’s list stored in Supabase, 
 * Status Handling: three store managers are integrated with the project. Sotres use getters to select the data when applying from the template. 
 * Asynchronous operations handling: the project uses promises to handle asyncronous operations adn fetching data from external APIs.
 * Styling: Quasar CSS framework is used and the project is fully responsive (600px breakpoint).
-* Functional app deployed using Netlify service: [Cities Bucket List]
+* Functional app deployed using Netlify service: [Cities Bucket List](https://city-bucket-list.netlify.app/#/)
 
-
-[1]: https://city-bucket-list.netlify.app/#/ "Cities Bucket List"
 
 ## Install the dependencies
 ```bash
