@@ -71,7 +71,7 @@ npm run format
 
 ## Credits
 
-As a first front-end development project, I was supported by the Ironhack Bootcampexcellent staff solving doubts and helping with some issues. Thank you Marc Compte, Pablo Mateos and Cristian Perdomo ;)
+As a first front-end development project, I was supported by the Ironhack Bootcamp excellent staff solving doubts and helping with some issues. Thank you Marc Compte, Pablo Mateos and Cristian Perdomo ;)
 
 ## License
 
