@@ -6,6 +6,8 @@
 import { useCitiesStore } from "../stores/cities";
 import { storeToRefs } from "pinia";
 import "leaflet/dist/leaflet.css";
+import "leaflet/dist/images/marker-shadow.png";
+import "leaflet/dist/images/marker-icon.png";
 import L from "leaflet";
 
 import "/public/Tween";
