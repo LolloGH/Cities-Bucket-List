@@ -6,11 +6,16 @@
     :modelValue="model"
     @input="$emit('update:model', $event.target.value)"
     use-input
-    use-chips
     multiple
+    max-values="1"
     input-debounce="0"
     @new-value="createValue"
     :options="filterOptions"
+    options-dense
+    clearable
+    transition-show="jump-up"
+    transition-hide="jump-up"
+    @virtual-scroll="onScroll"
     @filter="filterFn"
   />
 </template>
@@ -48,6 +53,7 @@ function createValue(val, done) {
   // and only resets the input textbox to empty string
 
   if (val.length > 0) {
+    // const modelValue = (model.value || []).slice();
     const modelValue = (model.value || []).slice();
 
     val
