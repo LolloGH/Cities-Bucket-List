@@ -6,8 +6,6 @@
 import { useCitiesStore } from "../stores/cities";
 import { storeToRefs } from "pinia";
 import "leaflet/dist/leaflet.css";
-import "leaflet/dist/images/marker-shadow.png";
-import "leaflet/dist/images/marker-icon.png";
 import L from "leaflet";
 
 import "/public/Tween";
@@ -161,6 +159,10 @@ onBeforeUnmount(() => {
   height: 100%;
   margin-bottom: 5px;
   border-radius: 5px;
+}
+
+.leaflet-default-icon-path {
+  background-image: url(https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png);
 }
 
 @media screen and (min-width: 600px) {

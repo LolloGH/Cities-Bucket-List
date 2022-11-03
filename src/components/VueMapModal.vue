@@ -96,6 +96,10 @@ onBeforeUnmount(() => {
   border-radius: 5px;
 }
 
+.leaflet-default-icon-path {
+  background-image: url(https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png);
+}
+
 @media screen and (min-width: 600px) {
 }
 </style>
