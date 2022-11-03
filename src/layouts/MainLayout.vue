@@ -42,7 +42,7 @@
       :width="270"
       :breakpoint="500"
       show-if-above
-      v-model="leftDrawerOpen"
+      v-model="drawerOp"
       bordered
     >
       <q-list>
@@ -96,6 +96,7 @@ const { user } = storeToRefs(userStore);
 
 const miniState = ref(true);
 const leftDrawerOpen = ref(false);
+const drawerOp = ref(!user || leftDrawerOpen);
 const router = useRouter();
 const linksList = [
   {
@@ -121,6 +122,7 @@ const linksList = [
 const essentialLinks = linksList;
 
 function toggleLeftDrawer() {
-  if (!user) leftDrawerOpen.value = !leftDrawerOpen.value;
+  leftDrawerOpen.value = !leftDrawerOpen.value;
+  console.log(leftDrawerOpen.value);
 }
 </script>

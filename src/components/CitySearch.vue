@@ -15,7 +15,6 @@
     clearable
     transition-show="jump-up"
     transition-hide="jump-up"
-    @virtual-scroll="onScroll"
     @filter="filterFn"
   />
 </template>
