@@ -8,8 +8,8 @@ import { storeToRefs } from "pinia";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 
-//import "../LeafletMaps/Tween.js";
-import "../LeafletMaps/leaflet.curve";
+import "/public/Tween";
+import "/public/leaflet.curve";
 import { onMounted, watch, onBeforeUnmount, onUpdated } from "vue";
 
 const cityStore = useCitiesStore();
