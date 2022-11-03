@@ -113,6 +113,10 @@ async function fetchGeoCode(city) {
   }
 }
 
+async function getCities() {
+  await cityStore.fetchCities();
+}
+
 async function getImage(city) {
   let imgAttribution;
   const result = await unsplash.search.getPhotos({
@@ -171,6 +175,8 @@ async function onSubmit() {
   );
 
   router.push({ path: "/myCities" });
+
+  getCities();
 }
 
 function onReset() {
