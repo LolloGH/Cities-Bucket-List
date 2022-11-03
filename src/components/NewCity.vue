@@ -2,11 +2,11 @@
   <div class="input-city" style="max-width: 500px; width: 80vw">
     <div
       class="text-h5 center"
-      style="max-width: 500px; width: 80vw; text-align: center"
+      style="max-width: 900px; width: 80vw; text-align: center"
     >
-      Hey buddy, welcome back! <br />Where are we going next?
+      Hey buddy, welcome back! Where are we going next?
     </div>
-    <div class="q-pt-md" style="width: 70%">
+    <div class="q-pt-md" style="width: 85vw">
       <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
         <CitySearch v-model="cityName" />
 
@@ -38,7 +38,7 @@
           v-model="text"
           filled
           type="textarea"
-          hint="Anything special that you want to note down for this destination?"
+          hint="Anything special to note down for this destination?"
         />
 
         <div class="form-buttons">
@@ -61,7 +61,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 50px auto;
+  margin: 40px auto;
 }
 
 .form-buttons {

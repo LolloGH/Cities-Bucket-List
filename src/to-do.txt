@@ -2,8 +2,6 @@
 2. add user name and user profile to db
 3. make the city select a signle value one
 finalize insert city with check for existing city and add new fields to the table
-4.days countdowd
-5. change alert type once city is deleted to have one that disappears without clicking
 
 check quasar parallax and timeline
 

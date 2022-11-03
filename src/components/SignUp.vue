@@ -1,6 +1,6 @@
 <template>
   <div class="sign-up">
-    <div class="q-pa-md" style="max-width: 500px; width: 70vw">
+    <div class="q-pa-md" style="max-width: 500px; width: 85vw">
       <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
         <!-- <q-input
           filled
