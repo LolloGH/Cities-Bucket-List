@@ -5,12 +5,12 @@ The app has been developed using Vue.js (Composition API). The back-end makes us
 
 This is my first project developing a front-end web app using Vue.js and Quasar App as the CSS framework. The project also calls the Unsplsh API to retrieve live images of the cities inserted in the list and Leaflet Maps (Openstreet maps) to display a map.
 
-##Tech Stack
+## Tech Stack
 
-*Client*: Vue.js, Vite (dev server)
-*Router*: Vue Router
-*Store*: Pinia and Pinia Persist for persistent login
-*Database as a service*: Supabase
+*Client* : Vue.js, Vite (dev server)
+*Router* : Vue Router
+*Store* : Pinia and Pinia Persist for persistent login
+*Database as a service* : Supabase
 
 ## Vue Modules
 
@@ -37,7 +37,7 @@ The app fetches all cities from the logged-in user’s list stored in Supabase, 
 * Asynchronous operations handling: the project uses promises to handle asyncronous operations adn fetching data from external APIs.
 * Styling: Quasar CSS framework is used and the project is fully responsive (600px breakpoint).
 * Functional app deployed using Netlify service: [Cities Bucket List]
-* 
+
 
 [1]: https://city-bucket-list.netlify.app/#/ "Cities Bucket List"
 
