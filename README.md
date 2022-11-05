@@ -38,35 +38,6 @@ Three stores are currently used by the project: a USER store to tore user authen
 * Styling: Quasar CSS framework is used and the project is fully responsive (600px breakpoint).
 * Functional app deployed using Netlify service: [Cities Bucket List](https://city-bucket-list.netlify.app/#/)
 
-
-## Install the dependencies
-```bash
-yarn
-# or
-npm install
-```
-
-### Start the app in development mode (hot-code reloading, error reporting, etc.)
-```bash
-quasar dev
-```
-
-
-### Lint the files
-```bash
-yarn lint
-# or
-npm run lint
-```
-
-
-### Format the files
-```bash
-yarn format
-# or
-npm run format
-```
-
 ## Credits
 
 As a first front-end development project, I was supported by the Ironhack Bootcamp excellent staff solving doubts and helping with some issues. Thank you Marc Compte, Pablo Mateos and Cristian Perdomo ;)
@@ -81,12 +52,4 @@ The above copyright notice and this permission notice shall be included in all c
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
-### Build the app for production
-```bash
-quasar build
-```
-
-### Customize the configuration
-See [Configuring quasar.config.js](https://v2.quasar.dev/quasar-cli-vite/quasar-config-js).
 
